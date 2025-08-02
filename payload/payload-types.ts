@@ -95,12 +95,14 @@ export interface Config {
     defaultIDType: string;
   };
   globals: {
-    'my-info': MyInfo;
-    'tech-stack': TechStack;
+    profile: Profile;
+    skills: Skill;
+    settings: Setting;
   };
   globalsSelect: {
-    'my-info': MyInfoSelect<false> | MyInfoSelect<true>;
-    'tech-stack': TechStackSelect<false> | TechStackSelect<true>;
+    profile: ProfileSelect<false> | ProfileSelect<true>;
+    skills: SkillsSelect<false> | SkillsSelect<true>;
+    settings: SettingsSelect<false> | SettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -185,6 +187,7 @@ export interface Blog {
     [k: string]: unknown;
   };
   featured?: boolean | null;
+  views?: number | null;
   slug?: string | null;
   slugLock?: boolean | null;
   publishedAt?: string | null;
@@ -318,7 +321,8 @@ export interface Project {
 export interface WorkExperience {
   id: string;
   _order?: string | null;
-  company: string;
+  companyName: string;
+  companyWebsiteUrl: string;
   position: string;
   location?: string | null;
   startDate: string;
@@ -355,7 +359,6 @@ export interface Contact {
   updatedAt: string;
   createdAt: string;
   deletedAt?: string | null;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -559,6 +562,7 @@ export interface BlogsSelect<T extends boolean = true> {
   title?: T;
   content?: T;
   featured?: T;
+  views?: T;
   slug?: T;
   slugLock?: T;
   publishedAt?: T;
@@ -699,7 +703,8 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface WorkExperienceSelect<T extends boolean = true> {
   _order?: T;
-  company?: T;
+  companyName?: T;
+  companyWebsiteUrl?: T;
   position?: T;
   location?: T;
   startDate?: T;
@@ -732,7 +737,6 @@ export interface ContactSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   deletedAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -799,15 +803,15 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "my-info".
+ * via the `definition` "profile".
  */
-export interface MyInfo {
+export interface Profile {
   id: string;
   avatar?: (string | null) | Media;
   name: string;
   email: string;
   logoText: string;
-  bio?: {
+  bio: {
     root: {
       type: string;
       children: {
@@ -821,8 +825,9 @@ export interface MyInfo {
       version: number;
     };
     [k: string]: unknown;
-  } | null;
+  };
   location?: string | null;
+  locationUrl?: string | null;
   githubUrl?: string | null;
   linkedinUrl?: string | null;
   websiteUrl?: string | null;
@@ -830,8 +835,7 @@ export interface MyInfo {
   socials?:
     | {
         name: string;
-        icon: string | Media;
-        url?: string | null;
+        url: string;
         id?: string | null;
       }[]
     | null;
@@ -840,35 +844,55 @@ export interface MyInfo {
   createdAt?: string | null;
 }
 /**
+ * Manage your skills, including names, icons, URLs, and descriptions.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tech-stack".
+ * via the `definition` "skills".
  */
-export interface TechStack {
+export interface Skill {
   id: string;
+  /**
+   * List of skills you want to showcase.
+   */
   items?:
     | {
         name: string;
-        icon: string | Media;
+        /**
+         * URL to the icon representing the skill. You can find icons for Tech products at devicon.dev or similar icon libraries.
+         */
+        iconUrl: string;
         url?: string | null;
-        description?: string | null;
         id?: string | null;
       }[]
     | null;
-  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "my-info_select".
+ * via the `definition` "settings".
  */
-export interface MyInfoSelect<T extends boolean = true> {
+export interface Setting {
+  id: string;
+  workExperience?: boolean | null;
+  projects?: boolean | null;
+  blogs?: boolean | null;
+  skills?: boolean | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "profile_select".
+ */
+export interface ProfileSelect<T extends boolean = true> {
   avatar?: T;
   name?: T;
   email?: T;
   logoText?: T;
   bio?: T;
   location?: T;
+  locationUrl?: T;
   githubUrl?: T;
   linkedinUrl?: T;
   websiteUrl?: T;
@@ -877,7 +901,6 @@ export interface MyInfoSelect<T extends boolean = true> {
     | T
     | {
         name?: T;
-        icon?: T;
         url?: T;
         id?: T;
       };
@@ -888,19 +911,30 @@ export interface MyInfoSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tech-stack_select".
+ * via the `definition` "skills_select".
  */
-export interface TechStackSelect<T extends boolean = true> {
+export interface SkillsSelect<T extends boolean = true> {
   items?:
     | T
     | {
         name?: T;
-        icon?: T;
+        iconUrl?: T;
         url?: T;
-        description?: T;
         id?: T;
       };
-  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings_select".
+ */
+export interface SettingsSelect<T extends boolean = true> {
+  workExperience?: T;
+  projects?: T;
+  blogs?: T;
+  skills?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -925,12 +959,8 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'work-experience';
           value: string | WorkExperience;
-        } | null)
-      | ({
-          relationTo: 'contact';
-          value: string | Contact;
         } | null);
-    global?: ('my-info' | 'tech-stack') | null;
+    global?: 'profile' | null;
     user?: (string | null) | User;
   };
   output?: unknown;

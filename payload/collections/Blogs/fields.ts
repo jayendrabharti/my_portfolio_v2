@@ -25,6 +25,15 @@ const fields: Field[] = [
     admin: {
       position: "sidebar",
     },
+    defaultValue: true,
+  },
+  {
+    name: "views",
+    type: "number",
+    admin: {
+      position: "sidebar",
+    },
+    defaultValue: 0,
   },
   ...slugField(),
   publishedAt({

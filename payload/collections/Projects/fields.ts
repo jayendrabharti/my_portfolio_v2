@@ -35,6 +35,7 @@ const fields: Field[] = [
     admin: {
       position: "sidebar",
     },
+    defaultValue: true,
   },
   ...slugField(),
   publishedAt({
@@ -44,6 +45,7 @@ const fields: Field[] = [
       },
       position: "sidebar",
     },
+    required: false,
   }),
   tagsField({
     admin: {

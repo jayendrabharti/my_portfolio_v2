@@ -10,16 +10,27 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import Reveal from "./animations/Reveal";
 import { anurati } from "@/utils/fonts";
+import { Profile, Setting } from "@/payload/payload-types";
 
-export const NavBarLinks = [
-  { name: "Home", href: "/", icon: FaHome },
-  { name: "Projects", href: "/projects", icon: PencilRulerIcon },
-  { name: "Blogs", href: "/blogs", icon: ScrollTextIcon },
-];
-
-export default function NavBar() {
+export default function NavBar({
+  profile,
+  settings,
+}: {
+  profile: Profile;
+  settings: Setting;
+}) {
   const pathname = usePathname();
   const [expanded, setExpanded] = useState(false);
+
+  const NavBarLinks = [
+    { name: "Home", href: "/", icon: FaHome },
+    ...(settings?.projects
+      ? [{ name: "Projects", href: "/projects", icon: PencilRulerIcon }]
+      : []),
+    ...(settings?.blogs
+      ? [{ name: "Blogs", href: "/blogs", icon: ScrollTextIcon }]
+      : []),
+  ];
 
   return (
     <nav
@@ -39,11 +50,11 @@ export default function NavBar() {
         )}
       >
         <Link
-          href="/home"
+          href="/"
           prefetch={true}
           className={cn(anurati.className, "cursor-pointer text-2xl font-bold")}
         >
-          JB
+          {profile?.logoText.toUpperCase()}
         </Link>
 
         <div
@@ -65,8 +76,11 @@ export default function NavBar() {
           )}
         >
           {NavBarLinks.map((link, index) => {
-            const active =
-              pathname === link.href || pathname.startsWith(link.href);
+            const active = () => {
+              if (pathname === "/" && link.href === "/") return true;
+              if (link.href === "/") return pathname === "/";
+              return pathname === link.href || pathname.startsWith(link.href);
+            };
             return (
               <Link
                 key={index}
@@ -76,8 +90,8 @@ export default function NavBar() {
                 className={cn(
                   "flex flex-row items-center",
                   "rounded-full px-5 py-2 font-bold md:px-2.5 md:py-1",
-                  active && "bg-primary text-background",
-                  !active &&
+                  active() && "bg-primary text-background",
+                  !active() &&
                     "hover:bg-accent text-muted-foreground hover:text-primary",
                   "ring-muted-foreground active:ring-4",
                   "transition-all duration-300",
@@ -91,7 +105,7 @@ export default function NavBar() {
           })}
         </div>
 
-        <ThemeSwitch />
+        <ThemeSwitch className={"ml-auto md:ml-0"} />
 
         <Button
           variant={"ghost"}

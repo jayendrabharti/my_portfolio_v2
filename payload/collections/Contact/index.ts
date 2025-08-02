@@ -3,6 +3,7 @@ import type { CollectionConfig } from "payload";
 import { authenticated } from "../../access/authenticated";
 import { anyone } from "@/payload/access/anyone";
 import fields from "./fields";
+import { revalidateContact, revalidateContactDelete } from "./actions";
 
 export const Contact: CollectionConfig = {
   slug: "contact",
@@ -13,15 +14,6 @@ export const Contact: CollectionConfig = {
   timestamps: true,
   orderable: true,
   trash: true,
-  versions: {
-    drafts: {
-      autosave: {
-        interval: 5000,
-      },
-      schedulePublish: true,
-    },
-    maxPerDoc: 50,
-  },
   admin: {
     useAsTitle: "email",
     defaultColumns: ["name", "email", "createdAt"],
@@ -32,6 +24,10 @@ export const Contact: CollectionConfig = {
     admin: authenticated,
     delete: authenticated,
     update: authenticated,
+  },
+  hooks: {
+    afterChange: [revalidateContact],
+    afterDelete: [revalidateContactDelete],
   },
   fields: fields,
 };

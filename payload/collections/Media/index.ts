@@ -1,10 +1,4 @@
 import type { CollectionConfig } from "payload";
-
-import {
-  FixedToolbarFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from "@payloadcms/richtext-lexical";
 import path from "path";
 import { fileURLToPath } from "url";
 import { authenticated } from "@/payload/access/authenticated";

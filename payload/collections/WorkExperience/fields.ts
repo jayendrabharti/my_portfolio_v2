@@ -1,10 +1,14 @@
 import { Field } from "payload";
-import publishedAt from "@/payload/fields/publishedAt";
 import tagsField from "@/payload/fields/tags";
 
 const fields: Field[] = [
   {
-    name: "company",
+    name: "companyName",
+    type: "text",
+    required: true,
+  },
+  {
+    name: "companyWebsiteUrl",
     type: "text",
     required: true,
   },
@@ -45,6 +49,7 @@ const fields: Field[] = [
     admin: {
       position: "sidebar",
     },
+    defaultValue: false,
   },
   {
     name: "description",

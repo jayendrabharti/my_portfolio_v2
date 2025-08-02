@@ -8,13 +8,30 @@ import { Users } from "./payload/collections/Users";
 import { Media } from "./payload/collections/Media";
 import { Blogs } from "./payload/collections/Blogs";
 import { Projects } from "./payload/collections/Projects";
-import { TechStack } from "./payload/globals/TechStack";
-import { MyInfo } from "./payload/globals/MyInfo";
 import { WorkExperience } from "./payload/collections/WorkExperience";
 import { Contact } from "./payload/collections/Contact";
+import { Profile } from "./payload/globals/Profile";
+import { Skills } from "./payload/globals/Skills";
+import { Settings } from "./payload/globals/Settings";
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
+import { nodemailerAdapter } from "@payloadcms/email-nodemailer";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
+const production = process.env.NODE_ENV === "production";
+
+const databaseAdapter = mongooseAdapter({
+  url: process.env.DATABASE_URI || "",
+});
+
+const storageAdapter = production
+  ? vercelBlobStorage({
+      collections: {
+        media: true,
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    })
+  : null;
 
 export default buildConfig({
   admin: {
@@ -24,14 +41,25 @@ export default buildConfig({
     },
   },
   editor: lexicalEditor(),
+  globals: [Profile, Skills, Settings],
   collections: [Users, Blogs, Projects, Media, WorkExperience, Contact],
-  globals: [MyInfo, TechStack],
   secret: process.env.PAYLOAD_SECRET || "",
-  db: mongooseAdapter({
-    url: process.env.DATABASE_URI || "",
-  }),
+  db: databaseAdapter,
   sharp,
   typescript: {
     outputFile: path.resolve(dirname, "payload/payload-types.ts"),
   },
+  plugins: [...(storageAdapter ? [storageAdapter] : [])],
+  email: nodemailerAdapter({
+    defaultFromAddress: process.env.SMTP_USER ?? "info@payloadcms.com",
+    defaultFromName: "Payload",
+    transportOptions: {
+      host: process.env.SMTP_HOST,
+      port: 587,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    },
+  }),
 });

@@ -2,10 +2,11 @@ import { anyone } from "@/payload/access/anyone";
 import { authenticated } from "@/payload/access/authenticated";
 import { GlobalConfig } from "payload";
 import fields from "./fields";
+import { revalidateProfile } from "./actions";
 
-export const TechStack: GlobalConfig = {
-  slug: "tech-stack",
-  label: "Tech Stack",
+export const Profile: GlobalConfig = {
+  slug: "profile",
+  label: "Profile",
   access: {
     read: anyone,
     update: authenticated,
@@ -17,6 +18,9 @@ export const TechStack: GlobalConfig = {
       },
       schedulePublish: true,
     },
+  },
+  hooks: {
+    afterChange: [revalidateProfile],
   },
   fields: fields,
 };

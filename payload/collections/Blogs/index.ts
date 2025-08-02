@@ -3,6 +3,7 @@ import type { CollectionConfig } from "payload";
 import { authenticated } from "../../access/authenticated";
 import { anyone } from "@/payload/access/anyone";
 import fields from "./fields";
+import { revalidateBlog, revalidateBlogDelete } from "./actions";
 
 export const Blogs: CollectionConfig = {
   slug: "blogs",
@@ -28,6 +29,10 @@ export const Blogs: CollectionConfig = {
     delete: authenticated,
     read: anyone,
     update: authenticated,
+  },
+  hooks: {
+    afterChange: [revalidateBlog],
+    afterDelete: [revalidateBlogDelete],
   },
   fields: fields,
 };

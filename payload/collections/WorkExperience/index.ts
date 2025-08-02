@@ -3,6 +3,10 @@ import type { CollectionConfig } from "payload";
 import { authenticated } from "../../access/authenticated";
 import { anyone } from "@/payload/access/anyone";
 import fields from "./fields";
+import {
+  revalidateWorkExperience,
+  revalidateWorkExperienceDelete,
+} from "./actions";
 
 export const WorkExperience: CollectionConfig = {
   slug: "work-experience",
@@ -23,8 +27,14 @@ export const WorkExperience: CollectionConfig = {
     maxPerDoc: 50,
   },
   admin: {
-    useAsTitle: "company",
-    defaultColumns: ["company", "position", "current", "startDate", "endDate"],
+    useAsTitle: "companyName",
+    defaultColumns: [
+      "companyName",
+      "position",
+      "current",
+      "startDate",
+      "endDate",
+    ],
   },
   access: {
     admin: authenticated,
@@ -32,6 +42,10 @@ export const WorkExperience: CollectionConfig = {
     delete: authenticated,
     read: anyone,
     update: authenticated,
+  },
+  hooks: {
+    afterChange: [revalidateWorkExperience],
+    afterDelete: [revalidateWorkExperienceDelete],
   },
   fields: fields,
 };
