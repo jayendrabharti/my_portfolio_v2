@@ -32,10 +32,17 @@ export default function NavBar({
       : []),
   ];
 
+  const isActive = (href: string) => {
+    if (!pathname) return false;
+    if (pathname === "/" && href === "/") return true;
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(href);
+  };
+
   return (
     <nav
       className={cn(
-        `w-full space-x-2`,
+        `w-full`,
         `border-border border-b shadow-md`,
         `sticky top-0 left-0 z-50`,
         `flex flex-row items-center py-4`,
@@ -46,7 +53,7 @@ export default function NavBar({
         className={cn(
           "flex items-center justify-between",
           "mx-auto px-5 md:px-10",
-          "w-full max-w-4xl space-x-3"
+          "w-full max-w-4xl gap-3"
         )}
       >
         <Link
@@ -62,7 +69,7 @@ export default function NavBar({
             `flex flex-col md:flex-row`,
             `items-start md:items-center`,
             `justify-end`, //change this value for links positioning
-            `gap-3 md:gap-1.5`,
+            `gap-2 md:gap-1`,
             `top-full left-0 w-full`,
             "px-5 py-4 md:p-0",
             "absolute md:static",
@@ -76,11 +83,7 @@ export default function NavBar({
           )}
         >
           {NavBarLinks.map((link, index) => {
-            const active = () => {
-              if (pathname === "/" && link.href === "/") return true;
-              if (link.href === "/") return pathname === "/";
-              return pathname === link.href || pathname.startsWith(link.href);
-            };
+            const active = isActive(link.href);
             return (
               <Link
                 key={index}
@@ -90,8 +93,8 @@ export default function NavBar({
                 className={cn(
                   "flex flex-row items-center",
                   "rounded-full px-5 py-2 font-bold md:px-2.5 md:py-1",
-                  active() && "bg-primary text-background",
-                  !active() &&
+                  active && "bg-primary text-background",
+                  !active &&
                     "hover:bg-accent text-muted-foreground hover:text-primary",
                   "ring-muted-foreground active:ring-4",
                   "transition-all duration-300",
@@ -105,7 +108,7 @@ export default function NavBar({
           })}
         </div>
 
-        <ThemeSwitch className={"ml-auto md:ml-0"} />
+        <ThemeSwitch />
 
         <Button
           variant={"ghost"}
