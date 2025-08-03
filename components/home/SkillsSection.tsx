@@ -2,6 +2,8 @@ import RevealHero from "@/components/animations/RevealHero";
 import Reveal from "@/components/animations/Reveal";
 import { getPayloadInstance } from "@/payload";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { Badge } from "../ui/badge";
 
 interface Skill {
   name: string;
@@ -34,7 +36,7 @@ export default async function SkillsSection() {
 
         {skills.items &&
           skills.items.map((skill: Skill, index: number) => (
-            <Reveal key={skill.id} delay={index * 0.2}>
+            <Reveal key={skill.id} delay={index * 0.1}>
               <SkillItem skill={skill} />
             </Reveal>
           ))}
@@ -47,11 +49,29 @@ function SkillItem({ skill }: { skill: Skill }) {
   return (
     <Link
       href={skill.url || "#"}
-      className="flex flex-col items-center"
       target="_blank"
       rel="noopener noreferrer"
+      className={cn(
+        "flex flex-col items-center relative",
+        "bg-secondary p-2 rounded-xl group"
+      )}
     >
-      <img src={skill.iconUrl} alt={skill.name} className="size-16" />
+      <img
+        src={skill.iconUrl}
+        alt={skill.name}
+        className="size-16 rounded-md"
+      />
+      <Badge
+        className={cn(
+          "absolute top-full left-1/2 transform -translate-x-1/2",
+          "-translate-y-2 group-hover:translate-y-0",
+          "opacity-0 group-hover:opacity-100",
+          "scale-0 group-hover:scale-100",
+          "transition-all duration-150"
+        )}
+      >
+        {skill.name}
+      </Badge>
     </Link>
   );
 }
