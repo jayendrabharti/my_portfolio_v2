@@ -6,6 +6,7 @@ import type {
 } from "payload";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { getPayloadInstance } from "@/payload";
+import nodemailer from "nodemailer";
 
 export const revalidateContact: CollectionAfterChangeHook<any> = async ({
   doc,
@@ -43,6 +44,27 @@ export const createMessageAction = async ({
   message: string;
 }) => {
   try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: process.env.SMTP_USER,
+      to: process.env.SMTP_USER,
+      subject: `Contact Form Submission by ${email}`,
+      html: `
+        <p><strong>Name:</strong> ${name ?? "N/A"}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Subject:</strong> ${subject}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message}</p>
+        <p>This message was sent from the contact form on your website.</p>`,
+    });
+
     const payload = await getPayloadInstance();
     await payload.create({
       collection: "contact",
