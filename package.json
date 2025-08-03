@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "dev": "payload generate:types && payload generate:importmap && next dev",
     "build": "payload generate:types && payload generate:importmap && next build",
     "start": "next start",
     "lint": "next lint"

@@ -15,9 +15,11 @@ import { Profile, Setting } from "@/payload/payload-types";
 export default function NavBar({
   profile,
   settings,
+  className = "",
 }: {
   profile: Profile;
   settings: Setting;
+  className?: string;
 }) {
   const pathname = usePathname();
   const [expanded, setExpanded] = useState(false);
@@ -34,7 +36,6 @@ export default function NavBar({
 
   const isActive = (href: string) => {
     if (!pathname) return false;
-    if (pathname === "/" && href === "/") return true;
     if (href === "/") return pathname === "/";
     return pathname === href || pathname.startsWith(href);
   };
@@ -42,6 +43,7 @@ export default function NavBar({
   return (
     <nav
       className={cn(
+        className,
         `w-full`,
         `border-border border-b shadow-md`,
         `sticky top-0 left-0 z-50`,
@@ -108,7 +110,7 @@ export default function NavBar({
           })}
         </div>
 
-        <ThemeSwitch />
+        <ThemeSwitch className={"ml-auto md:ml-0"} />
 
         <Button
           variant={"ghost"}

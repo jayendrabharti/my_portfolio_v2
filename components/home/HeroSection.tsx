@@ -63,7 +63,7 @@ export default async function HeroSection({
 
         {profile.location && profile.locationUrl && (
           <Link href={profile.locationUrl} target="_blank">
-            <Button variant={"link"} className="text-foreground">
+            <Button variant={"link"} className="text-foreground" size={"sm"}>
               <FaMapMarkerAlt className="w-4 h-4" />
               {profile.location}
             </Button>

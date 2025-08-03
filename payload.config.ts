@@ -18,20 +18,6 @@ import { nodemailerAdapter } from "@payloadcms/email-nodemailer";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
-const production = process.env.NODE_ENV === "production";
-
-const databaseAdapter = mongooseAdapter({
-  url: process.env.DATABASE_URI || "",
-});
-
-const storageAdapter = production
-  ? vercelBlobStorage({
-      collections: {
-        media: true,
-      },
-      token: process.env.BLOB_READ_WRITE_TOKEN,
-    })
-  : null;
 
 export default buildConfig({
   admin: {
@@ -44,12 +30,21 @@ export default buildConfig({
   globals: [Profile, Skills, Settings],
   collections: [Users, Blogs, Projects, Media, WorkExperience, Contact],
   secret: process.env.PAYLOAD_SECRET || "",
-  db: databaseAdapter,
+  db: mongooseAdapter({
+    url: process.env.DATABASE_URI || "",
+  }),
   sharp,
   typescript: {
     outputFile: path.resolve(dirname, "payload/payload-types.ts"),
   },
-  plugins: [...(storageAdapter ? [storageAdapter] : [])],
+  plugins: [
+    vercelBlobStorage({
+      collections: {
+        media: true,
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    }),
+  ],
   email: nodemailerAdapter({
     defaultFromAddress: process.env.SMTP_USER ?? "info@payloadcms.com",
     defaultFromName: "Payload",
