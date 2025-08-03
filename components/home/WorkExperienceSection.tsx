@@ -15,6 +15,7 @@ import { getPayloadInstance } from "@/payload";
 import RevealHero from "../animations/RevealHero";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { Separator } from "../ui/separator";
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -190,6 +191,7 @@ export function WorkExperienceCard({
             </div>
           </div>
 
+          <Separator />
           {/* Description */}
           <p className="text-muted-foreground leading-relaxed">
             {experience.description}
@@ -197,21 +199,24 @@ export function WorkExperienceCard({
 
           {/* Tags */}
           {experience.tags && experience.tags.length > 0 && (
-            <div className="space-y-3 ml-auto">
-              <h4 className="text-sm font-medium text-muted-foreground">
-                Technologies & Skills
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {experience.tags.map((tagItem, tagIndex) => (
-                  <Badge
-                    key={tagIndex}
-                    className="bg-foreground text-background"
-                  >
-                    {tagItem.tag}
-                  </Badge>
-                ))}
+            <>
+              <Separator />
+              <div className="space-y-3 ml-auto">
+                <h4 className="text-sm font-medium text-muted-foreground">
+                  Technologies & Skills
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {experience.tags.map((tagItem, tagIndex) => (
+                    <Badge
+                      key={tagIndex}
+                      className="bg-foreground text-background"
+                    >
+                      {tagItem.tag}
+                    </Badge>
+                  ))}
+                </div>
               </div>
-            </div>
+            </>
           )}
         </CardContent>
       </Card>
