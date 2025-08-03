@@ -71,7 +71,12 @@ export default async function WorkExperienceSection({
   const { docs: workExperiences }: { docs: WorkExperience[] } =
     await payload.find({
       collection: "work-experience",
-      sort: "-startDate", // Sort by start date descending (most recent first)
+      sort: "-startDate",
+      where: {
+        _status: {
+          equals: "published",
+        },
+      },
     });
 
   return (
