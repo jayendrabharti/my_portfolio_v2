@@ -58,15 +58,26 @@ export async function fetchGitHubStats(
 
     if (!userRes.ok || !reposRes.ok) return null;
 
+    interface GitHubRepo {
+      name: string;
+      description: string | null;
+      html_url: string;
+      stargazers_count: number;
+      forks_count: number;
+      language: string | null;
+      fork: boolean;
+      updated_at: string;
+    }
+
     const user = await userRes.json();
-    const repos: any[] = await reposRes.json();
+    const repos: GitHubRepo[] = await reposRes.json();
 
     const stars = repos.reduce(
-      (sum: number, repo: any) => sum + (repo.stargazers_count || 0),
+      (sum: number, repo: GitHubRepo) => sum + (repo.stargazers_count || 0),
       0,
     );
-    const forkedRepos = repos.filter((r: any) => r.fork).length;
-    const originalRepos = repos.filter((r: any) => !r.fork).length;
+    const forkedRepos = repos.filter((r) => r.fork).length;
+    const originalRepos = repos.filter((r) => !r.fork).length;
 
     const langMap = new Map<string, number>();
     for (const repo of repos) {
@@ -80,9 +91,9 @@ export async function fetchGitHubStats(
       .slice(0, 8);
 
     const recentRepos = repos
-      .filter((r: any) => !r.fork)
+      .filter((r) => !r.fork)
       .slice(0, 6)
-      .map((r: any) => ({
+      .map((r) => ({
         name: r.name,
         description: r.description,
         url: r.html_url,
