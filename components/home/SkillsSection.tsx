@@ -19,7 +19,10 @@ export default async function SkillsSection() {
   });
 
   return (
-    <section className="flex flex-col py-16 px-4 max-w-4xl mx-auto w-full">
+    <section
+      id="skills"
+      className="flex flex-col py-16 px-4 max-w-4xl mx-auto w-full"
+    >
       <RevealHero className="text-3xl md:text-5xl font-bold">
         Skills & Technologies
       </RevealHero>
@@ -53,7 +56,7 @@ function SkillItem({ skill }: { skill: Skill }) {
       rel="noopener noreferrer"
       className={cn(
         "flex flex-col items-center relative",
-        "bg-secondary p-2 rounded-xl group"
+        "bg-secondary p-2 rounded-xl group",
       )}
     >
       <img
@@ -67,7 +70,7 @@ function SkillItem({ skill }: { skill: Skill }) {
           "-translate-y-2 group-hover:translate-y-0",
           "opacity-0 group-hover:opacity-100",
           "scale-0 group-hover:scale-100",
-          "transition-all duration-150"
+          "transition-all duration-150",
         )}
       >
         {skill.name}

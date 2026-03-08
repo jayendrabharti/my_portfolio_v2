@@ -878,6 +878,7 @@ export interface Setting {
   projects?: boolean | null;
   blogs?: boolean | null;
   skills?: boolean | null;
+  github?: boolean | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -935,6 +936,7 @@ export interface SettingsSelect<T extends boolean = true> {
   projects?: T;
   blogs?: T;
   skills?: T;
+  github?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

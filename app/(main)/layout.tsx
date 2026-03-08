@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import NavBar from "@/components/NavBar";
+import CommandPalette from "@/components/CommandPalette";
 import Footer from "@/components/Footer";
 import Main from "@/components/Main";
 import { getPayloadInstance } from "@/payload";
@@ -27,15 +28,15 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
   return {
-    title: `Portfolio of ${profile.name}`,
+    title: profile.name,
     description:
       "Welcome to my portfolio website, showcasing my projects and blogs.",
     openGraph: {
-      title: `Portfolio of ${profile.name}`,
+      title: profile.name,
       description:
         "Welcome to my portfolio website, showcasing my projects and blogs.",
       url: profile.websiteUrl ?? "https://my-portfolio.com",
-      siteName: `Portfolio of ${profile.name}`,
+      siteName: profile.name,
       images: [
         {
           url:
@@ -84,9 +85,13 @@ export default async function RootLayout({
           ) : (
             <>
               <NavBar profile={profile} settings={settings} />
+              <CommandPalette
+                githubUrl={profile.githubUrl}
+                linkedinUrl={profile.linkedinUrl}
+              />
               <Main
                 className={cn(
-                  "flex w-full flex-col items-center overflow-y-auto overflow-x-hidden flex-1 min-h-0"
+                  "flex w-full flex-col items-center overflow-y-auto overflow-x-hidden flex-1 min-h-0 scroll-smooth",
                 )}
               >
                 {children}

@@ -1,7 +1,13 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Menu, PencilRulerIcon, ScrollTextIcon, X } from "lucide-react";
+import {
+  Menu,
+  PencilRulerIcon,
+  ScrollTextIcon,
+  SearchIcon,
+  X,
+} from "lucide-react";
 import { FaHome } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -47,15 +53,15 @@ export default function NavBar({
         `w-full`,
         `border-border border-b shadow-md`,
         `sticky top-0 left-0 z-50`,
-        `flex flex-row items-center py-4`,
-        `bg-background transition-all duration-200`
+        `flex flex-row items-center py-4 flex-shrink-0`,
+        `bg-background transition-all duration-200`,
       )}
     >
       <Reveal
         className={cn(
           "flex items-center justify-between",
           "mx-auto px-5 md:px-10",
-          "w-full max-w-4xl gap-3"
+          "w-full max-w-4xl gap-3",
         )}
       >
         <Link
@@ -81,7 +87,7 @@ export default function NavBar({
               ? "translate-y-0 scale-y-100"
               : "-translate-y-1/2 scale-y-0 md:translate-y-0 md:scale-y-100",
             expanded && "bg-background",
-            `border-border border-b-2 md:border-0`
+            `border-border border-b-2 md:border-0`,
           )}
         >
           {NavBarLinks.map((link, index) => {
@@ -100,7 +106,7 @@ export default function NavBar({
                     "hover:bg-accent text-muted-foreground hover:text-primary",
                   "ring-muted-foreground active:ring-4",
                   "transition-all duration-300",
-                  "w-full md:w-max"
+                  "w-full md:w-max",
                 )}
               >
                 <link.icon className="mr-1.5 size-4" />
@@ -111,6 +117,22 @@ export default function NavBar({
         </div>
 
         <ThemeSwitch className={"ml-auto md:ml-0"} />
+
+        <Button
+          variant={"outline"}
+          size={"sm"}
+          onClick={() => {
+            document.dispatchEvent(
+              new KeyboardEvent("keydown", { key: "k", ctrlKey: true }),
+            );
+          }}
+          className="hidden md:flex items-center gap-1.5 text-xs text-muted-foreground h-8 px-2"
+        >
+          <SearchIcon className="w-3 h-3" />
+          <kbd className="rounded border border-border bg-muted px-1 py-0.5 font-mono text-[10px]">
+            ⌘K
+          </kbd>
+        </Button>
 
         <Button
           variant={"ghost"}
@@ -124,14 +146,14 @@ export default function NavBar({
           <X
             className={cn(
               "absolute transition-all duration-200",
-              expanded ? "scale-200 rotate-180" : "scale-0 rotate-0"
+              expanded ? "scale-200 rotate-180" : "scale-0 rotate-0",
             )}
           />
 
           <Menu
             className={cn(
               "absolute transition-all duration-200",
-              expanded ? "scale-0 rotate-180" : "scale-200 rotate-0"
+              expanded ? "scale-0 rotate-180" : "scale-200 rotate-0",
             )}
           />
         </Button>

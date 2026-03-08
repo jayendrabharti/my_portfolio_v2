@@ -31,6 +31,12 @@ const fields: Field[] = [
             label: "Skills",
             defaultValue: true,
           },
+          {
+            type: "checkbox",
+            name: "github",
+            label: "GitHub Activity",
+            defaultValue: true,
+          },
         ],
       },
     ],

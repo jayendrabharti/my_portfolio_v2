@@ -25,7 +25,10 @@ export default async function BlogsSection() {
   });
 
   return (
-    <section className="flex flex-col gap-4 py-8 px-4 max-w-4xl mx-auto w-full">
+    <section
+      id="blogs"
+      className="flex flex-col gap-4 py-8 px-4 max-w-4xl mx-auto w-full"
+    >
       <RevealHero className="text-3xl md:text-5xl font-bold">Blogs</RevealHero>
       <p className="text-muted-foreground text-balance">
         Check out my latest blogs on web development and design.

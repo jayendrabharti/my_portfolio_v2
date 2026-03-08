@@ -1,4 +1,5 @@
 import BlogsSection from "@/components/home/BlogsSection";
+import GitHubSection from "@/components/home/GitHubSection";
 import HeroSection from "@/components/home/HeroSection";
 import ProjectsSection from "@/components/home/ProjectsSection";
 import SkillsSection from "@/components/home/SkillsSection";
@@ -15,6 +16,7 @@ export default async function HomePage() {
     <>
       <HeroSection />
       {settings.skills && <SkillsSection />}
+      {settings.github && <GitHubSection />}
       {settings.workExperience && <WorkExperienceSection />}
       {settings.projects && <ProjectsSection />}
       {settings.blogs && <BlogsSection />}
