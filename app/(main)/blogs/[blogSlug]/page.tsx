@@ -153,7 +153,7 @@ export default async function BlogPage({
   return (
     <article
       className={cn(
-        "flex flex-col gap-6 p-4 sm:p-6 md:p-8 lg:p-10 mx-auto max-w-4xl relative",
+        "flex flex-col gap-6 p-4 sm:p-6 md:p-8 lg:p-10 mx-auto rail-bounded relative",
         "min-h-screen"
       )}
     >

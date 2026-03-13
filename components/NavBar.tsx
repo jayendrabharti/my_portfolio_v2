@@ -51,7 +51,7 @@ export default function NavBar({
       className={cn(
         className,
         `w-full`,
-        `border-border border-b shadow-md`,
+        `border-border border-b `,
         `sticky top-0 left-0 z-50`,
         `flex flex-row items-center py-4 flex-shrink-0`,
         `bg-background transition-all duration-200`,
@@ -61,7 +61,7 @@ export default function NavBar({
         className={cn(
           "flex items-center justify-between",
           "mx-auto px-5 md:px-10",
-          "w-full max-w-4xl gap-3",
+          "w-full max-w-6xl gap-3",
         )}
       >
         <Link
@@ -82,7 +82,7 @@ export default function NavBar({
             "px-5 py-4 md:p-0",
             "absolute md:static",
             "transition-all duration-200",
-            "shadow-md md:shadow-none",
+            " md:shadow-none",
             expanded
               ? "translate-y-0 scale-y-100"
               : "-translate-y-1/2 scale-y-0 md:translate-y-0 md:scale-y-100",

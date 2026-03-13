@@ -129,7 +129,7 @@ const categories = [
 
 export default function TechStackPage() {
   return (
-    <section className="flex flex-col gap-8 py-8 px-4 max-w-4xl mx-auto w-full">
+    <section className="flex flex-col gap-8 py-8 px-4 rail-bounded">
       <div className="text-center">
         <RevealHero className="text-3xl md:text-5xl font-bold">
           Tech Stack

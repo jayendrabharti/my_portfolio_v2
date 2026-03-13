@@ -21,9 +21,9 @@ export default async function SkillsSection() {
   return (
     <section
       id="skills"
-      className="flex flex-col py-16 px-4 max-w-4xl mx-auto w-full"
+      className="flex flex-col py-16 px-4 rail-bounded"
     >
-      <RevealHero className="text-3xl md:text-5xl font-bold">
+      <RevealHero className="text-3xl md:text-5xl font-bold tracking-wide">
         Skills & Technologies
       </RevealHero>
       <p className="text-muted-foreground">
@@ -56,13 +56,13 @@ function SkillItem({ skill }: { skill: Skill }) {
       rel="noopener noreferrer"
       className={cn(
         "flex flex-col items-center relative",
-        "bg-secondary p-2 rounded-xl group",
+        "border border-dashed border-border p-4 bg-transparent hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors rounded-none group",
       )}
     >
       <img
         src={skill.iconUrl}
         alt={skill.name}
-        className="size-16 rounded-md"
+        className="size-16"
       />
       <Badge
         className={cn(

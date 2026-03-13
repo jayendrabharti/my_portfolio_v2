@@ -6,7 +6,7 @@ import SocialLink from "./SocialLink";
 
 export default async function Footer({ profile }: { profile: Profile }) {
   return (
-    <footer className="mx-auto mt-20 max-w-4xl w-full p-4">
+    <footer className="mx-auto mt-20 max-w-6xl w-full p-4">
       <div className="border-border border-t w-full pt-10">
         <div className="flex flex-col sm:flex-row justify-center  gap-8 items-center">
           <Link

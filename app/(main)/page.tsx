@@ -14,12 +14,43 @@ export default async function HomePage() {
 
   return (
     <>
-      <HeroSection />
-      {settings.skills && <SkillsSection />}
-      {settings.github && <GitHubSection />}
-      {settings.workExperience && <WorkExperienceSection />}
-      {settings.projects && <ProjectsSection />}
-      {settings.blogs && <BlogsSection />}
+      <div className="dot-pattern">
+        <HeroSection />
+      </div>
+      {settings.skills && (
+        <>
+          <div className="section-divider" aria-hidden="true" />
+          <SkillsSection />
+        </>
+      )}
+      {settings.github && (
+        <>
+          <div className="section-divider" aria-hidden="true" />
+          <div className="dot-pattern">
+            <GitHubSection />
+          </div>
+        </>
+      )}
+      {settings.workExperience && (
+        <>
+          <div className="section-divider" aria-hidden="true" />
+          <WorkExperienceSection />
+        </>
+      )}
+      {settings.projects && (
+        <>
+          <div className="section-divider" aria-hidden="true" />
+          <div className="dot-pattern">
+            <ProjectsSection />
+          </div>
+        </>
+      )}
+      {settings.blogs && (
+        <>
+          <div className="section-divider" aria-hidden="true" />
+          <BlogsSection />
+        </>
+      )}
     </>
   );
 }

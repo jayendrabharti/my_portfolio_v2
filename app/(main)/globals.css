@@ -195,6 +195,8 @@
   body {
     overflow-x: hidden;
     max-width: 100vw;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
 
   /* Ensure all containers respect viewport width */
@@ -203,28 +205,63 @@
   }
 }
 
-/* scrollbar styling */
+/* Vertical rail lines */
+.page-rails {
+  --rail-offset: max(1rem, calc(50% - 36rem)); /* = max-w-6xl centered */
+  position: relative;
+  overflow-x: clip; /* clip, NOT hidden — hidden breaks position:sticky */
+  width: 100%;
+}
+.page-rails::before,
+.page-rails::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+  pointer-events: none;
+  z-index: 1;
+}
+.page-rails::before { left: var(--rail-offset); }
+.page-rails::after { right: var(--rail-offset); }
 
+/* Content bounded to rail edges */
+.rail-bounded {
+  margin-left: var(--rail-offset);
+  margin-right: var(--rail-offset);
+}
+
+/* Horizontal section divider between rails */
+.section-divider {
+  position: relative;
+  height: 1px;
+  z-index: 2;
+  width: 100%;
+}
+.section-divider::before {
+  content: '';
+  position: absolute;
+  left: var(--rail-offset, max(1rem, calc(50% - 36rem)));
+  right: var(--rail-offset, max(1rem, calc(50% - 36rem)));
+  height: 1px;
+  background: var(--border);
+}
+
+/* Subtle dot pattern for section backgrounds */
+.dot-pattern {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Custom scrollbar — matches dark themes */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--foreground) var(--background);
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
 
-*::-webkit-scrollbar {
-  width: 8px;
-}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 3px; transition: background 0.3s ease; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
 
-*::-webkit-scrollbar-track {
-  background: var(--background);
-  border-radius: 4px;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--foreground), var(--primary));
-  border-radius: 4px;
-  transition: background 0.3s ease;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--primary), var(--secondary));
-}

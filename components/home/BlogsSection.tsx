@@ -27,9 +27,9 @@ export default async function BlogsSection() {
   return (
     <section
       id="blogs"
-      className="flex flex-col gap-4 py-8 px-4 max-w-4xl mx-auto w-full"
+      className="flex flex-col gap-4 py-8 px-4 rail-bounded"
     >
-      <RevealHero className="text-3xl md:text-5xl font-bold">Blogs</RevealHero>
+      <RevealHero className="text-3xl md:text-5xl font-bold tracking-wide">Blogs</RevealHero>
       <p className="text-muted-foreground text-balance">
         Check out my latest blogs on web development and design.
       </p>
@@ -47,7 +47,7 @@ export default async function BlogsSection() {
       )}
       <Link
         href={"/blogs"}
-        className="mx-auto flex flex-row items-center text-zinc-600 dark:text-zinc-400 hover:text-black hover:dark:text-white font-bold gap-1"
+        className="mx-auto flex flex-row items-center text-zinc-600 dark:text-zinc-400 hover:text-black hover:dark:text-white font-bold tracking-wide gap-1"
       >
         <ChevronDownIcon />
         View All Blogs

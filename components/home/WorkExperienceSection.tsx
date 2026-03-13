@@ -85,10 +85,10 @@ export default async function WorkExperienceSection({
       id="work-experience"
       className={cn(
         className,
-        "flex flex-col gap-4 py-8 px-4 max-w-4xl mx-auto w-full "
+        "flex flex-col gap-4 py-8 px-4 rail-bounded "
       )}
     >
-      <RevealHero className="text-3xl md:text-5xl font-bold">
+      <RevealHero className="text-3xl md:text-5xl font-bold tracking-wide">
         Work Experience
       </RevealHero>
       <p className="text-muted-foreground text-balance">
@@ -118,7 +118,7 @@ export function WorkExperienceCard({
 }) {
   return (
     <Reveal key={experience.id}>
-      <Card className="group hover:shadow-lg transition-all duration-300 border-border/50">
+      <Card className="group transition-all duration-300 border-border/50">
         <CardContent className="flex flex-col gap-2">
           <div className="flex flex-col sm:flex-row gap-4">
             {/* Company Logo */}
@@ -126,7 +126,7 @@ export function WorkExperienceCard({
               typeof experience.logo === "object" &&
               experience.logo.url && (
                 <div className="flex-shrink-0">
-                  <div className="size-16 relative rounded-xl border bg-background shadow-sm overflow-hidden">
+                  <div className="size-16 relative  border bg-background shadow-sm overflow-hidden">
                     <Image
                       src={experience.logo.url}
                       alt={`${experience.companyName} logo`}
@@ -141,7 +141,7 @@ export function WorkExperienceCard({
             <div className="flex-1 min-w-0">
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                 <div className="space-y-1">
-                  <CardTitle className="text-xl font-semibold">
+                  <CardTitle className="text-xl font-semibold tracking-wide">
                     {experience.position}
                   </CardTitle>
                   <div className="flex items-center gap-2">

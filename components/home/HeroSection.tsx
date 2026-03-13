@@ -43,7 +43,7 @@ export default async function HeroSection({
     <section
       id="hero-section"
       className={cn(
-        "relative min-h-[calc(100vh-4rem)] items-center justify-center py-8 px-4 flex md:flex-row flex-col-reverse gap-4 max-w-4xl mx-auto w-full overflow-hidden",
+        "relative min-h-[calc(100vh-4rem)] items-center justify-center py-8 px-4 flex md:flex-row flex-col-reverse gap-4 rail-bounded overflow-hidden",
         className
       )}
     >
@@ -84,7 +84,7 @@ export default async function HeroSection({
           className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto justify-center md:justify-start max-w-full mt-4"
         >
           <Link href="/contact-me" className="w-full sm:w-auto max-w-full">
-            <Button className="font-semibold w-full sm:w-auto group relative overflow-hidden min-w-0">
+            <Button className="font-semibold tracking-wide w-full sm:w-auto group relative overflow-hidden min-w-0">
               <span className="relative z-10 flex items-center gap-2 truncate">
                 <HandshakeIcon className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                 <span className="truncate">Let's Connect</span>

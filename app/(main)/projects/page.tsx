@@ -14,7 +14,7 @@ export default async function ProjectsPage() {
   });
 
   return (
-    <section className="flex flex-col gap-4 py-8 px-4 max-w-4xl mx-auto w-full">
+    <section className="flex flex-col gap-4 py-8 px-4 rail-bounded">
       <RevealHero className="mx-auto text-3xl md:text-5xl font-bold">
         Projects
       </RevealHero>

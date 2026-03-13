@@ -27,9 +27,9 @@ export default async function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="flex flex-col gap-4 py-8 px-4 max-w-4xl mx-auto w-full"
+      className="flex flex-col gap-4 py-8 px-4 rail-bounded"
     >
-      <RevealHero className="text-3xl md:text-5xl font-bold">
+      <RevealHero className="text-3xl md:text-5xl font-bold tracking-wide">
         Projects
       </RevealHero>
       <p className="text-muted-foreground text-balance">
@@ -49,7 +49,7 @@ export default async function ProjectsSection() {
       )}
       <Link
         href={"/projects"}
-        className="mx-auto flex flex-row items-center text-zinc-600 dark:text-zinc-400 hover:text-black hover:dark:text-white font-bold gap-1"
+        className="mx-auto flex flex-row items-center text-zinc-600 dark:text-zinc-400 hover:text-black hover:dark:text-white font-bold tracking-wide gap-1"
       >
         <ChevronDownIcon />
         View All Projects

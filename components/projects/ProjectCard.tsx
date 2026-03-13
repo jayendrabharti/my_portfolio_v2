@@ -21,8 +21,8 @@ export default function ProjectCard({ project }: { project: Project }) {
   };
 
   return (
-    <Card className="pt-0 group hover:shadow-lg transition-all duration-300 overflow-hidden border-border/50 hover:border-border">
-      <div className="relative h-48 overflow-hidden bg-muted">
+    <Card className="pt-0 group transition-all duration-300 ">
+      <div className="relative h-48 bg-muted">
         {project.coverImage &&
         typeof project.coverImage === "object" &&
         project.coverImage.url ? (
@@ -42,7 +42,7 @@ export default function ProjectCard({ project }: { project: Project }) {
       <CardContent className="flex flex-col gap-3">
         <div className="space-y-2">
           <div className="flex items-start justify-between gap-2">
-            <h3 className="text-xl font-semibold line-clamp-2 group-hover:text-primary transition-colors">
+            <h3 className="text-xl font-semibold tracking-wide line-clamp-2 group-hover:text-primary transition-colors">
               {project.title}
             </h3>
           </div>
