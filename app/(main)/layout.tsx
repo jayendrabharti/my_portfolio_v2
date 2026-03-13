@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/providers/ThemeProvider";
 import NavBar from "@/components/NavBar";
 import CommandPalette from "@/components/CommandPalette";
 import Footer from "@/components/Footer";
-import Main from "@/components/Main";
+import ScrollToTop from "@/components/ScrollToTop";
 import { getPayloadInstance } from "@/payload";
 import isProfileComplete from "@/payload/globals/Profile/utils";
 import { Button } from "@/components/ui/button";
@@ -69,11 +69,11 @@ export default async function RootLayout({
   });
 
   return (
-    <html lang="en" suppressHydrationWarning className="h-full overflow-hidden">
-      <body className={"h-full w-full flex flex-col overflow-hidden"}>
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
+      <body className="flex flex-col min-h-screen">
         <ThemeProvider>
           {!profileComplete ? (
-            <div className="flex flex-col items-center justify-center h-full gap-4">
+            <div className="flex flex-col items-center justify-center min-h-screen gap-4">
               <h1 className="text-2xl font-bold">Profile is not complete</h1>
               <p>Please complete your profile to access the site.</p>
               <Link href="/admin">
@@ -89,16 +89,17 @@ export default async function RootLayout({
                 githubUrl={profile.githubUrl}
                 linkedinUrl={profile.linkedinUrl}
               />
-              <Main
+              <main
                 className={cn(
-                  "flex w-full flex-col items-center overflow-y-auto flex-1 min-h-0 scroll-smooth",
+                  "flex w-full flex-col flex-1 items-center overflow-x-hidden",
                 )}
               >
                 <div className="page-rails flex flex-col w-full flex-1">
                   {children}
                 </div>
                 <Footer profile={profile} />
-              </Main>
+              </main>
+              <ScrollToTop />
             </>
           )}
         </ThemeProvider>

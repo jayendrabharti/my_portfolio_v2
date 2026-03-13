@@ -23,7 +23,7 @@ export default function ProjectCard({ project }: { project: Project }) {
   return (
     <div className="flex flex-col border border-border bg-transparent group relative hover:border-foreground transition-colors duration-300">
       <div className="absolute inset-0 bg-black/[0.02] dark:bg-white/[0.02] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-      <div className="relative h-48 border-b border-border bg-muted overflow-hidden">
+      <div className="relative aspect-video w-full border-b border-border bg-muted overflow-hidden">
         {project.coverImage &&
         typeof project.coverImage === "object" &&
         project.coverImage.url ? (
@@ -31,7 +31,7 @@ export default function ProjectCard({ project }: { project: Project }) {
             src={project.coverImage.url}
             alt={`${project.title} cover`}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0"
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
           <div className="w-full h-full bg-muted flex items-center justify-center diagonal-pattern-subtle">
@@ -67,12 +67,19 @@ export default function ProjectCard({ project }: { project: Project }) {
           <div className="mt-auto mb-4 border-t border-dashed border-border pt-4">
             <div className="flex flex-wrap gap-2">
               {project.tags.slice(0, 6).map((tagItem, index) => (
-                <Badge key={tagItem.id || index} variant="outline" className="font-mono text-[10px] uppercase rounded-none border-border">
+                <Badge
+                  key={tagItem.id || index}
+                  variant="outline"
+                  className="font-mono text-[10px] uppercase rounded-none border-border"
+                >
                   {tagItem.tag}
                 </Badge>
               ))}
               {project.tags.length > 6 && (
-                <Badge variant="outline" className="font-mono text-[10px] uppercase rounded-none border-border">
+                <Badge
+                  variant="outline"
+                  className="font-mono text-[10px] uppercase rounded-none border-border"
+                >
                   +{project.tags.length - 6}
                 </Badge>
               )}
@@ -89,7 +96,11 @@ export default function ProjectCard({ project }: { project: Project }) {
               rel="noopener noreferrer"
               className="flex-1"
             >
-              <Button variant="outline" size="sm" className="w-full rounded-none font-mono uppercase tracking-widest text-xs h-9">
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full rounded-none font-mono uppercase tracking-widest text-xs h-9"
+              >
                 <GithubIcon className="w-3 h-3 mr-2" />
                 Code
               </Button>
@@ -103,7 +114,10 @@ export default function ProjectCard({ project }: { project: Project }) {
               rel="noopener noreferrer"
               className="flex-1"
             >
-              <Button size="sm" className="w-full rounded-none font-mono uppercase tracking-widest text-xs h-9">
+              <Button
+                size="sm"
+                className="w-full rounded-none font-mono uppercase tracking-widest text-xs h-9"
+              >
                 <ExternalLink className="w-3 h-3 mr-2" />
                 Visit
               </Button>

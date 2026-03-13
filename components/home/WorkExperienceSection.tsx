@@ -133,7 +133,7 @@ export function WorkExperienceCard({
                     src={experience.logo.url}
                     alt={`${experience.companyName} logo`}
                     fill
-                    className="object-contain grayscale group-hover:grayscale-0 transition-all duration-300 p-1"
+                    className="object-contain transition-all duration-300 p-1"
                   />
                 </div>
               ) : (

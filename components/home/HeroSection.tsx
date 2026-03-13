@@ -85,7 +85,7 @@ export default async function HeroSection({
           <Reveal
             delay={0.3}
             type="bottomUp"
-            className="flex flex-col sm:flex-row items-center gap-4 mt-10"
+            className="flex flex-col sm:flex-row items-center gap-4 mt-10 flex-wrap"
           >
             <Link href="/contact-me" className="w-full sm:w-auto">
               <Button className="w-full sm:w-auto font-mono uppercase tracking-widest rounded-none hover:bg-foreground hover:text-background transition-colors h-12 px-8">
@@ -132,7 +132,7 @@ export default async function HeroSection({
               src={avatarSrc}
               alt={profile.name!}
               fill
-              className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+              className="object-cover transition-all duration-500"
               priority
             />
           </div>

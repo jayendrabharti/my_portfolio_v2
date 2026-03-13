@@ -16,20 +16,28 @@ export default async function Footer({ profile }: { profile: Profile }) {
           <div className="flex flex-col items-start gap-4 flex-1">
             <Link
               href="/"
-              className={cn(`text-4xl font-black tracking-[0.2em] relative group`, anurati.className)}
+              className={cn(
+                `text-4xl font-black tracking-[0.2em] relative group`,
+                anurati.className,
+              )}
             >
-              <span className="relative z-10">{profile?.logoText.toUpperCase()}</span>
+              <span className="relative z-10">
+                {profile?.logoText.toUpperCase()}
+              </span>
               <span className="absolute -bottom-2 left-0 w-full h-1/2 bg-primary/20 -z-10 group-hover:h-full transition-all duration-300 transform -skew-x-12" />
             </Link>
             <p className="font-mono text-sm tracking-widest text-muted-foreground uppercase max-w-sm mt-4">
-              Building structural systems for the modern web.
+              Building robust interfaces for the modern web.
             </p>
           </div>
 
           <div className="grid grid-cols-2 sm:flex gap-4 sm:gap-6 flex-wrap w-full md:w-auto">
             {profile.socials &&
               profile.socials.map((social, index) => (
-                <div key={index} className="border-2 border-border p-1 bg-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]">
+                <div
+                  key={index}
+                  className="border-2 border-border p-1 bg-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]"
+                >
                   <div className="border border-border/50 border-dashed p-3">
                     <SocialLink social={social} />
                   </div>
@@ -43,7 +51,9 @@ export default async function Footer({ profile }: { profile: Profile }) {
             {`© ${new Date().getFullYear()} ${profile?.name}`}
           </div>
           <div className="flex items-center gap-4 text-xs font-mono tracking-widest font-bold">
-            <span className="px-2 py-1 bg-primary text-primary-foreground">SYSTEM: ONLINE</span>
+            <span className="px-2 py-1 bg-primary text-primary-foreground">
+              STATUS: ONLINE
+            </span>
             <span className="px-2 py-1 border border-border">V2.0.0</span>
           </div>
         </div>

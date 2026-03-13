@@ -25,7 +25,7 @@ export default function BlogCard({ blog }: { blog: Blog }) {
   return (
     <div className="flex flex-col border border-border bg-transparent group relative hover:border-foreground transition-colors duration-300">
       <div className="absolute inset-0 bg-black/[0.02] dark:bg-white/[0.02] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-      <div className="relative h-48 border-b border-border bg-muted overflow-hidden">
+      <div className="relative aspect-video w-full border-b border-border bg-muted overflow-hidden">
         {blog.coverImage &&
         typeof blog.coverImage === "object" &&
         blog.coverImage.url ? (
@@ -33,7 +33,7 @@ export default function BlogCard({ blog }: { blog: Blog }) {
             src={blog.coverImage.url}
             alt={`${blog.title} cover`}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0"
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
           <div className="w-full h-full bg-muted flex items-center justify-center diagonal-pattern-subtle">
@@ -70,12 +70,19 @@ export default function BlogCard({ blog }: { blog: Blog }) {
           <div className="mt-auto mb-4 border-t border-dashed border-border pt-4">
             <div className="flex flex-wrap gap-2">
               {blog.tags.slice(0, 6).map((tagItem, index) => (
-                <Badge key={index} variant="outline" className="font-mono text-[10px] uppercase rounded-none border-border">
+                <Badge
+                  key={index}
+                  variant="outline"
+                  className="font-mono text-[10px] uppercase rounded-none border-border"
+                >
                   {tagItem.tag}
                 </Badge>
               ))}
               {blog.tags.length > 6 && (
-                <Badge variant="outline" className="font-mono text-[10px] uppercase rounded-none border-border">
+                <Badge
+                  variant="outline"
+                  className="font-mono text-[10px] uppercase rounded-none border-border"
+                >
                   +{blog.tags.length - 6}
                 </Badge>
               )}
@@ -95,7 +102,11 @@ export default function BlogCard({ blog }: { blog: Blog }) {
           </div>
           {blog.slug && (
             <Link href={`/blogs/${blog.slug}`}>
-              <Button size="sm" variant="ghost" className="rounded-none font-mono uppercase tracking-widest text-xs h-8 hover:bg-transparent hover:text-foreground">
+              <Button
+                size="sm"
+                variant="ghost"
+                className="rounded-none font-mono uppercase tracking-widest text-xs h-8 hover:bg-transparent hover:text-foreground"
+              >
                 Read full <ExternalLink className="w-3 h-3 ml-2" />
               </Button>
             </Link>

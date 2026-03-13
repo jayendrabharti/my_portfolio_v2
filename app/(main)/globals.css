@@ -45,7 +45,7 @@
 }
 /* 
 :root {
-  --radius: 0.65rem;
+  --radius: 0rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
@@ -114,7 +114,7 @@
 } */
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
@@ -294,7 +294,7 @@
 }
 ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
+  border-radius: 0px;
   transition: background 0.3s ease;
 }
 ::-webkit-scrollbar-thumb:hover {

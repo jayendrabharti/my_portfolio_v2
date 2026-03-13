@@ -31,7 +31,7 @@ export default async function GitHubSection() {
     >
       <div className="flex flex-col gap-2">
         <RevealHero className="text-3xl md:text-5xl font-black uppercase tracking-tight">
-          Open Source
+          GitHub
         </RevealHero>
         <p className="text-muted-foreground font-mono text-sm uppercase tracking-widest max-w-xl">
           GitHub footprints and repository statistics
@@ -41,18 +41,29 @@ export default async function GitHubSection() {
       {/* Stats Cards */}
       <Reveal>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-0 border border-border">
-          <StatCard label="Repositories" value={stats.publicRepos} isLast={false} />
+          <StatCard
+            label="Repositories"
+            value={stats.publicRepos}
+            isLast={false}
+          />
           <StatCard label="Stars Earned" value={stats.stars} isLast={false} />
           <StatCard label="Followers" value={stats.followers} isLast={false} />
           <StatCard label="Following" value={stats.following} isLast={false} />
-          <StatCard label="Public Gists" value={stats.publicGists} isLast={true} />
+          <StatCard
+            label="Public Gists"
+            value={stats.publicGists}
+            isLast={true}
+          />
         </div>
       </Reveal>
 
       {/* Grid for Calendar & Top Languages */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 border border-border">
         {/* Contribution Calendar */}
-        <Reveal delay={0.1} className="lg:col-span-2 border-b lg:border-b-0 lg:border-r border-border p-6 bg-background">
+        <Reveal
+          delay={0.1}
+          className="lg:col-span-2 border-b lg:border-b-0 lg:border-r border-border p-6 bg-background"
+        >
           <div className="flex flex-col h-full">
             <h3 className="text-sm font-mono uppercase tracking-widest mb-6 font-bold flex items-center">
               <span className="w-2 h-2 bg-primary mr-2" />
@@ -66,16 +77,27 @@ export default async function GitHubSection() {
 
         {/* Top Languages */}
         {stats.topLanguages.length > 0 && (
-          <Reveal delay={0.2} className="col-span-1 p-6 bg-background diagonal-pattern-subtle">
+          <Reveal
+            delay={0.2}
+            className="col-span-1 p-6 bg-background diagonal-pattern-subtle"
+          >
             <h3 className="text-sm font-mono uppercase tracking-widest mb-6 font-bold flex items-center border-b border-dashed border-border pb-4">
-               <span className="w-2 h-2 bg-foreground mr-2" />
-               Top Languages
+              <span className="w-2 h-2 bg-foreground mr-2" />
+              Top Languages
             </h3>
             <div className="flex flex-col gap-3">
               {stats.topLanguages.map((lang) => (
-                <div key={lang.name} className="flex items-center justify-between border border-border bg-background p-3">
-                  <span className="font-mono text-xs uppercase tracking-widest font-bold">{lang.name}</span>
-                  <Badge variant="outline" className="rounded-none border-border font-mono text-[10px]">
+                <div
+                  key={lang.name}
+                  className="flex items-center justify-between border border-border bg-background p-3"
+                >
+                  <span className="font-mono text-xs uppercase tracking-widest font-bold">
+                    {lang.name}
+                  </span>
+                  <Badge
+                    variant="outline"
+                    className="rounded-none border-border font-mono text-[10px]"
+                  >
                     {lang.count} {lang.count === 1 ? "REC" : "RECS"}
                   </Badge>
                 </div>
@@ -97,7 +119,12 @@ export default async function GitHubSection() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
               {stats.recentRepos.map((repo, index) => (
-                <RepoCard key={repo.name} repo={repo} index={index} total={stats.recentRepos.length} />
+                <RepoCard
+                  key={repo.name}
+                  repo={repo}
+                  index={index}
+                  total={stats.recentRepos.length}
+                />
               ))}
             </div>
           </div>
@@ -107,11 +134,11 @@ export default async function GitHubSection() {
       {/* View Profile Link */}
       <Reveal delay={0.4}>
         <div className="flex justify-center mt-4">
-          <Link
-            href={profile.githubUrl}
-            target="_blank"
-          >
-            <Button size="lg" className="rounded-none font-mono uppercase tracking-widest px-8">
+          <Link href={profile.githubUrl} target="_blank">
+            <Button
+              size="lg"
+              className="rounded-none font-mono uppercase tracking-widest px-8"
+            >
               <FaGithub className="w-4 h-4 mr-3" />
               Visit Profile
             </Button>
@@ -122,23 +149,43 @@ export default async function GitHubSection() {
   );
 }
 
-function StatCard({ label, value, isLast }: { label: string; value: number, isLast: boolean }) {
+function StatCard({
+  label,
+  value,
+  isLast,
+}: {
+  label: string;
+  value: number;
+  isLast: boolean;
+}) {
   return (
-    <div className={`flex flex-col items-center justify-center p-6 bg-background dark:bg-black/[0.2] transition-colors hover:bg-black/[0.02] dark:hover:bg-white/[0.02] border-r border-border last:border-r-0 md:!border-r ${isLast ? 'md:!border-r-0' : ''}`}>
+    <div
+      className={`flex flex-col items-center justify-center p-6 bg-background dark:bg-black/[0.2] transition-colors hover:bg-black/[0.02] dark:hover:bg-white/[0.02] border-r border-border last:border-r-0 md:!border-r ${isLast ? "md:!border-r-0" : ""}`}
+    >
       <span className="text-3xl font-black font-sans mb-1 text-foreground">
         {value.toLocaleString()}
       </span>
-      <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{label}</span>
+      <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+        {label}
+      </span>
     </div>
   );
 }
 
-function RepoCard({ repo, index, total }: { repo: GitHubStats["recentRepos"][number], index: number, total: number }) {
+function RepoCard({
+  repo,
+  index,
+  total,
+}: {
+  repo: GitHubStats["recentRepos"][number];
+  index: number;
+  total: number;
+}) {
   return (
     <Link
       href={repo.url}
       target="_blank"
-      className={`flex flex-col gap-3 p-5 bg-background hover:bg-muted transition-colors group ${index % 2 === 0 ? 'md:border-r' : ''} border-border ${index >= total - 2 && index >= 2 ? '' : 'border-b'}`}
+      className={`flex flex-col gap-3 p-5 bg-background hover:bg-muted transition-colors group ${index % 2 === 0 ? "md:border-r" : ""} border-border ${index >= total - 2 && index >= 2 ? "" : "border-b"}`}
     >
       <div className="flex items-center gap-3">
         <FaGithub className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />

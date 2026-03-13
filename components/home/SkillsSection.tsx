@@ -68,7 +68,7 @@ function SkillItem({ skill }: { skill: Skill }) {
       <img
         src={skill.iconUrl}
         alt={skill.name}
-        className="w-8 h-8 md:w-10 md:h-10 grayscale group-hover:grayscale-0 transition-all duration-300"
+        className="w-8 h-8 md:w-10 md:h-10 transition-all duration-300"
       />
       <div
         className={cn(

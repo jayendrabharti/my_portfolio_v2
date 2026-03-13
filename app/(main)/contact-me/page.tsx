@@ -39,7 +39,7 @@ export default function ContactPage() {
 
   const handleSubmit = async (
     values: ContactFormValues,
-    { resetForm }: FormikHelpers
+    { resetForm }: FormikHelpers,
   ) => {
     try {
       const result = await createMessageAction({
@@ -73,7 +73,7 @@ export default function ContactPage() {
             TRANSMISSION SECURED
           </span>
           <p className="font-mono text-xs tracking-widest text-muted-foreground uppercase text-center relative z-10">
-            Your message has been successfully logged into the system.
+            Your message has been successfully submitted.
           </p>
           <Link
             href="/"
@@ -90,7 +90,7 @@ export default function ContactPage() {
       <div className="border-[3px] border-border bg-background p-8 md:p-12 mb-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] relative overflow-hidden">
         <div className="absolute inset-0 diagonal-pattern opacity-10 pointer-events-none" />
         <h2 className="relative z-10 text-4xl md:text-6xl font-black tracking-tighter uppercase">
-          SYSTEM_CONTACT
+          CONTACT
         </h2>
         <p className="relative z-10 font-mono text-sm mt-4 tracking-widest text-muted-foreground uppercase max-w-lg">
           INITIATE A DIRECT SECURE CONNECTION.
@@ -174,8 +174,8 @@ export default function ContactPage() {
                 />
               </div>
 
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 disabled={isSubmitting}
                 className="mt-6 border-2 border-border !rounded-none bg-primary text-primary-foreground p-6 font-mono font-bold text-sm tracking-widest uppercase hover:-translate-y-[2px] hover:-translate-x-[2px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] dark:hover:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] transition-all flex items-center justify-center gap-4 w-full sm:w-auto self-start"
               >
