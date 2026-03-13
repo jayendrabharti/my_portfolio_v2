@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { bodyFont, displayFont } from "@/utils/fonts";
 
 export async function generateMetadata(): Promise<Metadata> {
   const payload = await getPayloadInstance();
@@ -23,18 +24,19 @@ export async function generateMetadata(): Promise<Metadata> {
     return {
       title: "My Portfolio",
       description:
-        "Welcome to my portfolio website, showcasing my projects and blogs.",
+        "Personal portfolio showcasing projects, writing, and experience in modern web development.",
     };
   }
 
+  const professionalDescription =
+    "Frontend-focused software developer building high-performance, conversion-oriented web experiences and products.";
+
   return {
     title: profile.name,
-    description:
-      "Welcome to my portfolio website, showcasing my projects and blogs.",
+    description: professionalDescription,
     openGraph: {
       title: profile.name,
-      description:
-        "Welcome to my portfolio website, showcasing my projects and blogs.",
+      description: professionalDescription,
       url: profile.websiteUrl ?? "https://my-portfolio.com",
       siteName: profile.name,
       images: [
@@ -70,7 +72,13 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning className="h-full overflow-hidden">
-      <body className={"h-full w-full flex flex-col overflow-hidden"}>
+      <body
+        className={cn(
+          bodyFont.variable,
+          displayFont.variable,
+          "h-full w-full flex flex-col overflow-hidden antialiased",
+        )}
+      >
         <ThemeProvider>
           {!profileComplete ? (
             <div className="flex flex-col items-center justify-center h-full gap-4">

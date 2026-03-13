@@ -223,23 +223,23 @@ export default function CommandPalette({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-start justify-center pt-[20vh]"
+      className="fixed inset-0 z-100 flex items-start justify-center pt-[20vh]"
       onClick={() => {
         setOpen(false);
         setQuery("");
       }}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-background/72 backdrop-blur-md" />
 
       {/* Palette */}
       <div
-        className="relative w-full max-w-lg mx-4 rounded-xl border border-border bg-card shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150"
+        className="ambient-panel relative mx-4 w-full max-w-lg overflow-hidden rounded-2xl animate-in fade-in zoom-in-95 duration-150"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input */}
-        <div className="flex items-center gap-3 border-b border-border px-4">
-          <SearchIcon className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+        <div className="flex items-center gap-3 border-b border-border/70 px-4">
+          <SearchIcon className="w-4 h-4 shrink-0 text-muted-foreground" />
           <input
             autoFocus
             value={query}
@@ -259,7 +259,7 @@ export default function CommandPalette({
         </div>
 
         {/* Results */}
-        <div className="max-h-[300px] overflow-y-auto p-2">
+        <div className="max-h-75 overflow-y-auto p-2">
           {filtered.length === 0 && (
             <p className="py-6 text-center text-sm text-muted-foreground">
               No results found.
@@ -281,8 +281,8 @@ export default function CommandPalette({
                     onMouseEnter={() => setSelectedIndex(idx)}
                     className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
                       selectedIndex === idx
-                        ? "bg-accent text-accent-foreground"
-                        : "text-foreground hover:bg-accent/50"
+                        ? "bg-primary/15 text-foreground"
+                        : "text-foreground hover:bg-accent/40"
                     }`}
                   >
                     <span className="text-muted-foreground">{cmd.icon}</span>
@@ -295,17 +295,17 @@ export default function CommandPalette({
         </div>
 
         {/* Footer hint */}
-        <div className="flex items-center justify-between border-t border-border px-4 py-2 text-xs text-muted-foreground">
+        <div className="flex items-center justify-between border-t border-border/70 px-4 py-2 text-xs text-muted-foreground">
           <div className="flex items-center gap-2">
-            <kbd className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px]">
+            <kbd className="rounded border border-border/80 bg-background/70 px-1.5 py-0.5 font-mono text-[10px]">
               ↑↓
             </kbd>
             <span>Navigate</span>
-            <kbd className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px]">
+            <kbd className="rounded border border-border/80 bg-background/70 px-1.5 py-0.5 font-mono text-[10px]">
               ↵
             </kbd>
             <span>Select</span>
-            <kbd className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px]">
+            <kbd className="rounded border border-border/80 bg-background/70 px-1.5 py-0.5 font-mono text-[10px]">
               Esc
             </kbd>
             <span>Close</span>

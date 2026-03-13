@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import {
+  CommandIcon,
   Menu,
   PencilRulerIcon,
   ScrollTextIcon,
@@ -12,7 +13,7 @@ import { FaHome } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeSwitch from "./ThemeSwitch";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "./ui/button";
 import Reveal from "./animations/Reveal";
 import { anurati } from "@/utils/fonts";
@@ -30,15 +31,22 @@ export default function NavBar({
   const pathname = usePathname();
   const [expanded, setExpanded] = useState(false);
 
-  const NavBarLinks = [
-    { name: "Home", href: "/", icon: FaHome },
-    ...(settings?.projects
-      ? [{ name: "Projects", href: "/projects", icon: PencilRulerIcon }]
-      : []),
-    ...(settings?.blogs
-      ? [{ name: "Blogs", href: "/blogs", icon: ScrollTextIcon }]
-      : []),
-  ];
+  const navBarLinks = useMemo(
+    () => [
+      { name: "Home", href: "/", icon: FaHome },
+      ...(settings?.projects
+        ? [{ name: "Projects", href: "/projects", icon: PencilRulerIcon }]
+        : []),
+      ...(settings?.blogs
+        ? [{ name: "Blogs", href: "/blogs", icon: ScrollTextIcon }]
+        : []),
+    ],
+    [settings?.blogs, settings?.projects],
+  );
+
+  useEffect(() => {
+    setExpanded(false);
+  }, [pathname]);
 
   const isActive = (href: string) => {
     if (!pathname) return false;
@@ -46,118 +54,147 @@ export default function NavBar({
     return pathname === href || pathname.startsWith(href);
   };
 
+  const triggerCommandPalette = () => {
+    document.dispatchEvent(
+      new KeyboardEvent("keydown", { key: "k", ctrlKey: true, metaKey: true }),
+    );
+  };
+
   return (
     <nav
       className={cn(
+        "sticky top-0 left-0 z-50 w-full px-3 pt-3 sm:px-4",
         className,
-        `w-full`,
-        `border-border border-b shadow-md`,
-        `sticky top-0 left-0 z-50`,
-        `flex flex-row items-center py-4 flex-shrink-0`,
-        `bg-background transition-all duration-200`,
       )}
     >
       <Reveal
+        className="mx-auto w-full max-w-5xl"
+        type="topDown"
+        duration={0.5}
+      >
+        <div className="ambient-panel flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-3">
+          <Link href="/" prefetch className="group flex min-w-0 flex-col">
+            <span className="text-[10px] font-semibold tracking-[0.24em] text-muted-foreground/80">
+              PORTFOLIO
+            </span>
+            <span
+              className={cn(
+                anurati.className,
+                "truncate text-xl font-bold leading-none text-foreground sm:text-2xl",
+              )}
+            >
+              {profile?.logoText.toUpperCase()}
+            </span>
+          </Link>
+
+          <div className="mx-1 hidden items-center gap-1 md:flex">
+            {navBarLinks.map((link) => {
+              const active = isActive(link.href);
+              return (
+                <Link
+                  key={link.href}
+                  prefetch
+                  href={link.href}
+                  className={cn(
+                    "group inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold transition-all duration-200",
+                    active
+                      ? "bg-primary text-primary-foreground shadow-md shadow-primary/30"
+                      : "text-muted-foreground hover:bg-accent/70 hover:text-foreground",
+                  )}
+                >
+                  <link.icon className="size-3.5" />
+                  {link.name}
+                </Link>
+              );
+            })}
+          </div>
+
+          <span className="soft-outline ml-auto hidden items-center px-3 py-1 text-xs font-semibold tracking-wide text-foreground/85 xl:inline-flex">
+            Open To Work
+          </span>
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={triggerCommandPalette}
+            className="hidden h-9 items-center gap-1.5 rounded-full px-3 text-xs text-muted-foreground lg:inline-flex"
+          >
+            <SearchIcon className="size-3.5" />
+            Search
+            <kbd className="inline-flex items-center gap-0.5 rounded border border-border/70 bg-background px-1.5 py-0.5 font-mono text-[10px]">
+              <CommandIcon className="size-2.5" />K
+            </kbd>
+          </Button>
+
+          <ThemeSwitch className="rounded-full" />
+
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={(event) => {
+              setExpanded((prev) => !prev);
+              event.stopPropagation();
+            }}
+            className="relative flex rounded-full md:hidden"
+            aria-label={expanded ? "Close navigation" : "Open navigation"}
+          >
+            <X
+              className={cn(
+                "absolute transition-all duration-250",
+                expanded ? "scale-100 rotate-0" : "scale-0 -rotate-90",
+              )}
+            />
+            <Menu
+              className={cn(
+                "absolute transition-all duration-250",
+                expanded ? "scale-0 rotate-90" : "scale-100 rotate-0",
+              )}
+            />
+          </Button>
+        </div>
+      </Reveal>
+
+      <div
         className={cn(
-          "flex items-center justify-between",
-          "mx-auto px-5 md:px-10",
-          "w-full max-w-4xl gap-3",
+          "mx-auto mt-2 w-full max-w-5xl overflow-hidden transition-all duration-300 md:hidden",
+          expanded
+            ? "max-h-96 opacity-100"
+            : "pointer-events-none max-h-0 opacity-0",
         )}
       >
-        <Link
-          href="/"
-          prefetch={true}
-          className={cn(anurati.className, "cursor-pointer text-2xl font-bold")}
-        >
-          {profile?.logoText.toUpperCase()}
-        </Link>
+        <div className="ambient-panel px-3 py-3">
+          <div className="flex flex-col gap-1.5">
+            {navBarLinks.map((link) => {
+              const active = isActive(link.href);
+              return (
+                <Link
+                  key={link.href}
+                  prefetch
+                  href={link.href}
+                  className={cn(
+                    "inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold transition-colors",
+                    active
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:bg-accent/60 hover:text-foreground",
+                  )}
+                >
+                  <link.icon className="size-4" />
+                  {link.name}
+                </Link>
+              );
+            })}
 
-        <div
-          className={cn(
-            `flex flex-col md:flex-row`,
-            `items-start md:items-center`,
-            `justify-end`, //change this value for links positioning
-            `gap-2 md:gap-1`,
-            `top-full left-0 w-full`,
-            "px-5 py-4 md:p-0",
-            "absolute md:static",
-            "transition-all duration-200",
-            "shadow-md md:shadow-none",
-            expanded
-              ? "translate-y-0 scale-y-100"
-              : "-translate-y-1/2 scale-y-0 md:translate-y-0 md:scale-y-100",
-            expanded && "bg-background",
-            `border-border border-b-2 md:border-0`,
-          )}
-        >
-          {NavBarLinks.map((link, index) => {
-            const active = isActive(link.href);
-            return (
-              <Link
-                key={index}
-                prefetch={true}
-                href={link.href}
-                onClick={() => setExpanded(false)}
-                className={cn(
-                  "flex flex-row items-center",
-                  "rounded-full px-5 py-2 font-bold md:px-2.5 md:py-1",
-                  active && "bg-primary text-background",
-                  !active &&
-                    "hover:bg-accent text-muted-foreground hover:text-primary",
-                  "ring-muted-foreground active:ring-4",
-                  "transition-all duration-300",
-                  "w-full md:w-max",
-                )}
-              >
-                <link.icon className="mr-1.5 size-4" />
-                {link.name}
-              </Link>
-            );
-          })}
+            <Button
+              variant="outline"
+              onClick={triggerCommandPalette}
+              className="mt-1 justify-start rounded-xl text-sm"
+            >
+              <SearchIcon className="size-4" />
+              Open Command Palette
+            </Button>
+          </div>
         </div>
-
-        <ThemeSwitch className={"ml-auto md:ml-0"} />
-
-        <Button
-          variant={"outline"}
-          size={"sm"}
-          onClick={() => {
-            document.dispatchEvent(
-              new KeyboardEvent("keydown", { key: "k", ctrlKey: true }),
-            );
-          }}
-          className="hidden md:flex items-center gap-1.5 text-xs text-muted-foreground h-8 px-2"
-        >
-          <SearchIcon className="w-3 h-3" />
-          <kbd className="rounded border border-border bg-muted px-1 py-0.5 font-mono text-[10px]">
-            ⌘K
-          </kbd>
-        </Button>
-
-        <Button
-          variant={"ghost"}
-          size={"icon"}
-          onClick={(e) => {
-            setExpanded((prev) => !prev);
-            e.stopPropagation();
-          }}
-          className={cn("relative flex md:hidden")}
-        >
-          <X
-            className={cn(
-              "absolute transition-all duration-200",
-              expanded ? "scale-200 rotate-180" : "scale-0 rotate-0",
-            )}
-          />
-
-          <Menu
-            className={cn(
-              "absolute transition-all duration-200",
-              expanded ? "scale-0 rotate-180" : "scale-200 rotate-0",
-            )}
-          />
-        </Button>
-      </Reveal>
+      </div>
     </nav>
   );
 }

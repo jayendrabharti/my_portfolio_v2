@@ -1,47 +1,59 @@
 "use client";
-import { motion, useAnimation, useInView } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 export default function AppearingText({
   text,
   className = "",
+  delay = 0,
 }: {
   text: string;
   className?: string;
+  delay?: number;
 }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref);
-  const controls = useAnimation();
+  const reduceMotion = useReducedMotion();
+  const words = text.trim().split(/\s+/);
 
-  useEffect(() => {
-    if (isInView) {
-      controls.start("visible");
-    } else {
-      controls.set("hidden");
-    }
-  }, [isInView, controls]);
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        delayChildren: delay,
+        staggerChildren: 0.065,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, filter: "blur(6px)", y: 14 },
+    visible: {
+      opacity: 1,
+      filter: "blur(0px)",
+      y: 0,
+      transition: {
+        duration: 0.35,
+        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+      },
+    },
+  };
 
   return (
-    <span ref={ref} className={className}>
-      {text.split(" ").map((word, index) => (
+    <motion.span
+      className={className}
+      variants={containerVariants}
+      initial="hidden"
+      whileInView={reduceMotion ? "hidden" : "visible"}
+      viewport={{ once: true, amount: 0.8 }}
+      animate={reduceMotion ? "visible" : undefined}
+    >
+      {words.map((word, index) => (
         <motion.span
           key={index}
-          variants={{
-            hidden: { opacity: 0, filter: "blur(4px)", y: 10 },
-            visible: { opacity: 1, filter: "blur(0px)", y: 0 },
-          }}
-          initial="hidden"
-          animate={controls}
-          transition={{
-            duration: 0.3,
-            delay: index * 0.1,
-            ease: "easeInOut",
-          }}
+          variants={itemVariants}
           className="mr-2 inline-block"
         >
           {word}
         </motion.span>
       ))}
-    </span>
+    </motion.span>
   );
 }

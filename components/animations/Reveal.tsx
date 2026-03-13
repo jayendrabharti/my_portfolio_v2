@@ -1,7 +1,10 @@
 "use client";
-import { motion, useAnimation, useInView } from "framer-motion";
-import { useEffect, useRef } from "react";
-
+import {
+  motion,
+  useReducedMotion,
+  Variants,
+  TargetAndTransition,
+} from "framer-motion";
 import { ReactNode } from "react";
 
 export default function Reveal({
@@ -10,6 +13,8 @@ export default function Reveal({
   type = "bottomUp",
   duration = 0.6,
   delay = 0,
+  once = true,
+  amount = 0.2,
 }: {
   children: ReactNode;
   className?: string;
@@ -22,38 +27,30 @@ export default function Reveal({
     | "fadeIn";
   duration?: number;
   delay?: number;
+  once?: boolean;
+  amount?: number;
 }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref);
-  const controls = useAnimation();
+  const reduceMotion = useReducedMotion();
 
-  useEffect(() => {
-    if (isInView) {
-      controls.start("visible");
-    } else {
-      controls.set("hidden");
-    }
-  }, [isInView, controls]);
-
-  const variants = {
+  const variants: Record<string, Variants> = {
     bottomUp: {
-      hidden: { opacity: 0, y: 25 },
+      hidden: { opacity: 0, y: 28 },
       visible: { opacity: 1, y: 0 },
     },
     topDown: {
-      hidden: { opacity: 0, y: -25 },
+      hidden: { opacity: 0, y: -28 },
       visible: { opacity: 1, y: 0 },
     },
     scaleOut: {
-      hidden: { scale: 0.5, opacity: 0 },
+      hidden: { scale: 0.9, opacity: 0, y: 12 },
       visible: { scale: 1, opacity: 1 },
     },
     leftRight: {
-      hidden: { opacity: 0, x: -25 },
+      hidden: { opacity: 0, x: -32 },
       visible: { opacity: 1, x: 0 },
     },
     rightLeft: {
-      hidden: { opacity: 0, x: 25 },
+      hidden: { opacity: 0, x: 32 },
       visible: { opacity: 1, x: 0 },
     },
     fadeIn: {
@@ -62,13 +59,27 @@ export default function Reveal({
     },
   };
 
+  const selectedVariant = variants[type];
+  const staticState = { opacity: 1, y: 0, x: 0, scale: 1 };
+
   return (
     <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={controls}
-      variants={variants[type]}
-      transition={{ duration, delay }}
+      initial={
+        reduceMotion
+          ? staticState
+          : (selectedVariant.hidden as TargetAndTransition)
+      }
+      whileInView={
+        reduceMotion
+          ? staticState
+          : (selectedVariant.visible as TargetAndTransition)
+      }
+      viewport={{ once, amount, margin: "0px 0px -80px 0px" }}
+      transition={{
+        duration,
+        delay,
+        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+      }}
       className={className}
     >
       {children}

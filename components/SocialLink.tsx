@@ -38,7 +38,7 @@ interface SocialLinkProps {
 function getSocialIcon(
   url: string | null | undefined,
   name: string,
-  size: "sm" | "md" | "lg" = "md"
+  size: "sm" | "md" | "lg" = "md",
 ) {
   const sizeClasses = {
     sm: "w-4 h-4",
@@ -189,7 +189,7 @@ export default function SocialLink({
     <Link
       href={formattedUrl}
       target="_blank"
-      className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 p-2 rounded-md hover:bg-muted/50"
+      className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/65 p-2 text-muted-foreground transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:text-primary"
       aria-label={`Visit ${social.name}`}
     >
       {icon}

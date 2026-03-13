@@ -1,6 +1,6 @@
 "use client";
-import { motion, useAnimation, useInView } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 import { ReactNode } from "react";
 
@@ -8,56 +8,65 @@ export default function RevealHero({
   children,
   width = "fit-content",
   className = "",
-  bgColor = "bg-primary",
+  bgColor = "bg-primary/35",
+  delay = 0,
 }: {
   children: ReactNode;
   width?: string;
   className?: string;
   bgColor?: string;
+  delay?: number;
 }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref);
-  const slideControls = useAnimation();
-  const contentControls = useAnimation();
-
-  useEffect(() => {
-    if (isInView) {
-      slideControls.start("visible");
-      contentControls.start("visible");
-    } else {
-      slideControls.set("hidden");
-      contentControls.set("hidden");
-    }
-  }, [isInView, slideControls, contentControls]);
+  const reduceMotion = useReducedMotion();
 
   return (
-    <div
-      ref={ref}
+    <motion.div
       style={{ width }}
-      className={`${className} relative overflow-hidden`}
+      className={cn(className, "relative overflow-hidden")}
+      initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
+      whileInView={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.7 }}
+      transition={{
+        duration: 0.72,
+        delay,
+        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+      }}
     >
       <motion.div
-        className={`slide absolute top-0 left-0 bottom-0 right-0 z-20 ${bgColor}`}
-        variants={{
-          hidden: { left: 0 },
-          visible: { left: "100%" },
+        className={cn(
+          "pointer-events-none absolute inset-0 z-20 origin-left rounded-xl",
+          bgColor,
+        )}
+        initial={reduceMotion ? { scaleX: 0 } : { scaleX: 1 }}
+        whileInView={reduceMotion ? { scaleX: 0 } : { scaleX: 0 }}
+        viewport={{ once: true, amount: 0.7 }}
+        transition={{
+          duration: 0.7,
+          delay: delay + 0.08,
+          ease: [0.4, 0, 0.2, 1] as [number, number, number, number],
         }}
-        initial="hidden"
-        animate={slideControls}
-        transition={{ duration: 0.6, delay: 0, ease: "easeIn" }}
       />
       <motion.div
-        variants={{
-          hidden: { opacity: 0, y: 100 },
-          visible: { opacity: 1, y: 0 },
+        initial={
+          reduceMotion
+            ? { opacity: 1, y: 0 }
+            : { opacity: 0, y: 26, filter: "blur(8px)" }
+        }
+        whileInView={
+          reduceMotion
+            ? { opacity: 1, y: 0 }
+            : { opacity: 1, y: 0, filter: "blur(0px)" }
+        }
+        viewport={{ once: true, amount: 0.7 }}
+        transition={{
+          duration: 0.72,
+          delay: delay + 0.05,
+          ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
         }}
-        initial="hidden"
-        animate={contentControls}
-        transition={{ duration: 0.6, delay: 0 }}
-        className="relative z-10 py-2"
+        className="relative z-10 py-1"
       >
         {children}
       </motion.div>
-    </div>
+    </motion.div>
   );
 }

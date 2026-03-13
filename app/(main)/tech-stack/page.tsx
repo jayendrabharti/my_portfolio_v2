@@ -129,12 +129,20 @@ const categories = [
 
 export default function TechStackPage() {
   return (
-    <section className="flex flex-col gap-8 py-8 px-4 max-w-4xl mx-auto w-full">
-      <div className="text-center">
-        <RevealHero className="text-3xl md:text-5xl font-bold">
+    <section className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-12">
+      <div className="space-y-3">
+        <Reveal>
+          <span className="soft-outline inline-flex px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+            Built With
+          </span>
+        </Reveal>
+        <RevealHero
+          className="text-3xl font-bold sm:text-4xl md:text-5xl"
+          delay={0.05}
+        >
           Tech Stack
         </RevealHero>
-        <p className="text-muted-foreground mt-2">
+        <p className="text-muted-foreground mt-2 max-w-3xl text-balance">
           The technologies and tools powering this portfolio
         </p>
       </div>
@@ -145,28 +153,31 @@ export default function TechStackPage() {
         return (
           <Reveal key={category} delay={catIdx * 0.1}>
             <div className="space-y-3">
-              <h2 className="text-xl font-semibold flex items-center gap-2">
-                <Badge variant="secondary" className="text-xs">
+              <h2 className="flex items-center gap-2 text-xl font-semibold">
+                <Badge
+                  variant="outline"
+                  className="rounded-full bg-background/70 text-xs"
+                >
                   {items.length}
                 </Badge>
                 {category}
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {items.map((tech) => (
                   <Link
                     key={tech.name}
                     href={tech.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex flex-col gap-1.5 rounded-xl border border-border bg-card p-4 transition-all duration-300 hover:border-primary hover:shadow-sm"
+                    className="group flex flex-col gap-1.5 rounded-2xl border border-border/75 bg-card/85 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/45 hover:shadow-[0_22px_50px_-36px_rgba(27,95,197,0.5)]"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-medium group-hover:text-primary transition-colors">
+                      <span className="font-medium transition-colors group-hover:text-primary">
                         {tech.name}
                       </span>
-                      <ExternalLinkIcon className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <ExternalLinkIcon className="h-3.5 w-3.5 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
                     </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    <p className="text-sm leading-relaxed text-muted-foreground">
                       {tech.description}
                     </p>
                   </Link>

@@ -1,7 +1,9 @@
 import RevealHero from "@/components/animations/RevealHero";
+import Reveal from "@/components/animations/Reveal";
+import { StaggerContainer, StaggerItem } from "@/components/animations/Stagger";
 import ProjectCard from "@/components/projects/ProjectCard";
 import { getPayloadInstance } from "@/payload";
-import { ChevronDownIcon } from "lucide-react";
+import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
 
 export default async function ProjectsSection() {
@@ -27,33 +29,51 @@ export default async function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="flex flex-col gap-4 py-8 px-4 max-w-4xl mx-auto w-full"
+      className="mx-auto flex w-full max-w-5xl flex-col gap-5 px-4 py-12"
     >
-      <RevealHero className="text-3xl md:text-5xl font-bold">
-        Projects
-      </RevealHero>
-      <p className="text-muted-foreground text-balance">
-        A few recent projects that highlight my skills and creativity.
-      </p>
+      <div className="space-y-3">
+        <Reveal delay={0.05}>
+          <span className="soft-outline inline-flex px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+            Selected Work
+          </span>
+        </Reveal>
+        <RevealHero
+          className="text-3xl font-bold sm:text-4xl md:text-5xl"
+          delay={0.08}
+        >
+          Projects That Solve Real Problems
+        </RevealHero>
+        <Reveal delay={0.12}>
+          <p className="max-w-3xl text-balance text-muted-foreground sm:text-base">
+            A curated selection of products I designed and built to improve user
+            experience, performance, and business outcomes.
+          </p>
+        </Reveal>
+      </div>
 
       {!projects.docs.length ? (
         <span className="text-2xl font-extralight text-muted-foreground mx-auto">
           No Featured Projects
         </span>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <StaggerContainer className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {projects.docs.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <StaggerItem key={project.id} type="scaleOut">
+              <ProjectCard project={project} />
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       )}
-      <Link
-        href={"/projects"}
-        className="mx-auto flex flex-row items-center text-zinc-600 dark:text-zinc-400 hover:text-black hover:dark:text-white font-bold gap-1"
-      >
-        <ChevronDownIcon />
-        View All Projects
-      </Link>
+
+      <Reveal delay={0.2}>
+        <Link
+          href="/projects"
+          className="mx-auto inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-5 py-2.5 text-sm font-semibold text-foreground transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:text-primary"
+        >
+          Explore All Projects
+          <ArrowRightIcon className="h-4 w-4" />
+        </Link>
+      </Reveal>
     </section>
   );
 }

@@ -19,14 +19,14 @@ export default function GitHubContributionCalendar({
   if (!mounted) {
     return (
       <div className="w-full overflow-x-auto">
-        <div className="h-[160px] animate-pulse rounded-md bg-muted" />
+        <div className="h-40 animate-pulse rounded-md bg-muted" />
       </div>
     );
   }
 
   const theme = {
-    dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
-    light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
+    dark: ["#1f2937", "#123f52", "#0e7490", "#0284c7", "#38bdf8"],
+    light: ["#e8eef8", "#cfe0f4", "#9dc5ee", "#5aa6e8", "#1f7dcf"],
   };
 
   return (

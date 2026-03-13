@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "skills": {
+    "3d-web-experience": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "computedHash": "969ddfb5df5eeb2affed21ed6b73dd11b56c8d46ed8ca939e74cfa191f2390c1"
+    },
+    "interactive-portfolio": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "computedHash": "983e2d3e464dcf4a113500c3de9efd47e6ed985b81ccbb8b44f30851b003cf75"
+    },
+    "landing-page-design": {
+      "source": "inferen-sh/skills",
+      "sourceType": "github",
+      "computedHash": "9fbf5403eeb024e9012d403afb3e76697c8659e8b3b623eb002b80b6aa5516aa"
+    },
+    "scroll-experience": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "computedHash": "ebbffa1536b34bc79ad614d990db93c5f3a8aa43537ce051e527f2a96fc6aee2"
+    }
+  }
+}

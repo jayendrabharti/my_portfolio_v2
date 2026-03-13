@@ -63,9 +63,14 @@ export async function generateMetadata({
     }
 
     const coverImageUrl =
-      typeof blog.coverImage === "string"
-        ? blog.coverImage
-        : "/placeholder.png";
+      typeof blog.coverImage === "object" &&
+      blog.coverImage !== null &&
+      "url" in blog.coverImage &&
+      blog.coverImage.url
+        ? (blog.coverImage.url as string)
+        : typeof blog.coverImage === "string"
+          ? blog.coverImage
+          : "/placeholder.png";
 
     return {
       title: blog.title,
@@ -153,30 +158,30 @@ export default async function BlogPage({
   return (
     <article
       className={cn(
-        "flex flex-col gap-6 p-4 sm:p-6 md:p-8 lg:p-10 mx-auto max-w-4xl relative",
-        "min-h-screen"
+        "mx-auto flex max-w-5xl flex-col gap-6 px-4 py-10 sm:px-6 md:px-8",
+        "min-h-screen",
       )}
     >
       {/* Back to Blogs Button */}
       <div className="flex justify-end">
         <Link
           href="/blogs"
-          className="flex items-center gap-2 px-4 py-2 bg-muted text-muted-foreground rounded-full hover:bg-muted/80 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-4 py-2 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:border-primary hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
           aria-label="Go back to blogs page"
         >
           <ArrowLeftIcon className="w-4 h-4" />
-          <span className="text-sm font-medium">Back to Blogs</span>
+          <span>Back to Blogs</span>
         </Link>
       </div>
 
       {/* Blog Header */}
-      <header className="space-y-4">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-foreground leading-tight">
+      <header className="ambient-panel space-y-5 p-5 sm:p-7">
+        <h1 className="display-title text-3xl font-extrabold leading-tight sm:text-4xl md:text-5xl">
           {blog.title}
         </h1>
 
         {/* Author and Metadata */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3 text-muted-foreground">
+        <div className="flex flex-col gap-3 text-muted-foreground sm:flex-row sm:items-center">
           <div className="flex items-center gap-3">
             <Link
               href={profile.githubUrl ?? "#"}
@@ -188,10 +193,10 @@ export default async function BlogPage({
                 alt="profile picture"
                 width={40}
                 height={40}
-                className="cursor-pointer aspect-square w-10 h-10 rounded-full object-cover border-2 border-border hover:border-primary transition-colors"
+                className="aspect-square h-10 w-10 cursor-pointer rounded-full border-2 border-border object-cover transition-colors hover:border-primary"
               />
             </Link>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-1">
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-center">
               <span className="font-semibold text-foreground">
                 {profile.name}
               </span>
@@ -206,12 +211,12 @@ export default async function BlogPage({
           </div>
 
           {/* Views */}
-          <div className="flex items-center gap-1 sm:ml-auto">
+          <div className="flex items-center gap-1 rounded-full border border-border/75 bg-background/70 px-2.5 py-1 text-xs sm:ml-auto">
             <EyeIcon
-              className="w-4 h-4 text-muted-foreground"
+              className="h-4 w-4 text-muted-foreground"
               aria-hidden="true"
             />
-            <span className="text-sm text-muted-foreground">
+            <span>
               <BlogViews slug={blog.slug as string} increment={true} />
               &nbsp;views
             </span>
@@ -226,7 +231,11 @@ export default async function BlogPage({
             aria-label="Blog tags"
           >
             {blog.tags.map((tag, index) => (
-              <Badge variant={"outline"} key={index}>
+              <Badge
+                variant="outline"
+                key={index}
+                className="rounded-full bg-background/70"
+              >
                 {tag.tag}
               </Badge>
             ))}
@@ -236,18 +245,20 @@ export default async function BlogPage({
 
       {/* Cover Image */}
       {blog.coverImage && (
-        <Image
-          src={coverImageSrc}
-          alt={`Cover image for ${blog.title}`}
-          width={500}
-          height={500}
-          className="object-cover w-full rounded-2xl"
-        />
+        <div className="overflow-hidden rounded-3xl border border-border/75">
+          <Image
+            src={coverImageSrc}
+            alt={`Cover image for ${blog.title}`}
+            width={1200}
+            height={700}
+            className="h-auto w-full object-cover"
+          />
+        </div>
       )}
 
       {/* Blog Content */}
-      <div className="text-wrap break-words w-full prose max-w-full text-primary-foreground">
-        <RichText data={blog.content} className="text-primary-foreground" />
+      <div className="ambient-panel prose prose-zinc max-w-none wrap-break-word p-5 text-foreground sm:p-8 dark:prose-invert">
+        <RichText data={blog.content} className="text-foreground" />
       </div>
     </article>
   );
