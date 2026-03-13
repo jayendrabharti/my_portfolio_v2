@@ -40,6 +40,17 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# agents and skills
+/.agents/
+/.agent/
+/.claude/
+skills-lock.json
+*.instructions.md
+*.prompt.md
+*.agent.md
+copilot-instructions.md
+.cursorrules
+
 # generated files
 payload/payload-types.ts
 app/(payload)/admin/importMap.js

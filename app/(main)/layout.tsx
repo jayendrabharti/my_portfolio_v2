@@ -91,7 +91,7 @@ export default async function RootLayout({
               />
               <main
                 className={cn(
-                  "flex w-full flex-col flex-1 items-center overflow-x-hidden",
+                  "flex w-full flex-col flex-1 items-center overflow-x-clip",
                 )}
               >
                 <div className="page-rails flex flex-col w-full flex-1">
