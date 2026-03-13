@@ -234,7 +234,7 @@ export default function CommandPalette({
 
       {/* Palette */}
       <div
-        className="relative w-full max-w-lg mx-4 rounded-xl border border-border bg-card shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150"
+        className="relative w-full max-w-lg mx-4 rounded-none border-4 border-border bg-card shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] overflow-hidden animate-in fade-in zoom-in-95 duration-150"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input */}
@@ -279,7 +279,7 @@ export default function CommandPalette({
                     key={cmd.id}
                     onClick={() => runCommand(cmd)}
                     onMouseEnter={() => setSelectedIndex(idx)}
-                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
+                    className={`flex w-full items-center gap-3 rounded-none px-3 py-2.5 text-sm transition-colors ${
                       selectedIndex === idx
                         ? "bg-accent text-accent-foreground"
                         : "text-foreground hover:bg-accent/50"
@@ -297,15 +297,15 @@ export default function CommandPalette({
         {/* Footer hint */}
         <div className="flex items-center justify-between border-t border-border px-4 py-2 text-xs text-muted-foreground">
           <div className="flex items-center gap-2">
-            <kbd className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px]">
+            <kbd className="border-4 border-border bg-muted px-1.5 py-0.5 font-mono text-[10px]">
               ↑↓
             </kbd>
             <span>Navigate</span>
-            <kbd className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px]">
+            <kbd className="border-4 border-border bg-muted px-1.5 py-0.5 font-mono text-[10px]">
               ↵
             </kbd>
             <span>Select</span>
-            <kbd className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px]">
+            <kbd className="border-4 border-border bg-muted px-1.5 py-0.5 font-mono text-[10px]">
               Esc
             </kbd>
             <span>Close</span>

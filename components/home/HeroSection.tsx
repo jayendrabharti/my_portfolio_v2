@@ -12,7 +12,7 @@ import {
   FaDownload,
   FaMapMarkerAlt,
 } from "react-icons/fa";
-import { HandshakeIcon, MailIcon } from "lucide-react";
+import { HandshakeIcon } from "lucide-react";
 import { getPayloadInstance } from "@/payload";
 
 export default async function HeroSection({
@@ -43,136 +43,131 @@ export default async function HeroSection({
     <section
       id="hero-section"
       className={cn(
-        "relative min-h-[calc(100vh-4rem)] items-center justify-center py-8 px-4 flex md:flex-row flex-col-reverse gap-4 rail-bounded overflow-hidden",
-        className
+        "relative min-h-[calc(100vh-4rem)] grid grid-cols-1 md:grid-cols-2 rail-bounded overflow-hidden border-x border-border",
+        className,
       )}
     >
       {/* Content Section */}
-      <div className="flex flex-col gap-4 items-center md:items-start text-center md:text-left flex-1 min-w-0 w-full md:w-auto">
-        <RevealHero>
-          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-extrabold leading-tight break-words">
-            Hi, I'm{" "}
-            <span className="relative inline-block">
-              <span className="bg-gradient-to-r from-primary to-primary/30 bg-clip-text text-transparent">
-                {profile.name}
-              </span>
-              <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-primary to-transparent rounded-full"></div>
-            </span>
-          </h1>
-        </RevealHero>
+      <div className="flex flex-col justify-center gap-8 p-8 md:p-12 lg:p-16 border-b border-border md:border-b-0 md:border-r border-dashed diagonal-pattern-subtle">
+        <div className="bg-background/80 backdrop-blur-[2px] p-6 border border-border">
+          <RevealHero>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-sans font-black uppercase tracking-tight leading-none break-words">
+              {profile.name}
+            </h1>
+          </RevealHero>
+          <div className="h-4"></div>
 
-        {profile.location && profile.locationUrl && (
-          <Link href={profile.locationUrl} target="_blank">
-            <Button variant={"link"} className="text-foreground" size={"sm"}>
-              <FaMapMarkerAlt className="w-4 h-4" />
-              {profile.location}
-            </Button>
-          </Link>
-        )}
-
-        <Reveal className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-full">
-          <RichText
-            className="text-balance break-words"
-            data={profile.bio as SerializedEditorState}
-          />
-        </Reveal>
-
-        {/* Action Buttons */}
-        <Reveal
-          delay={0.3}
-          type="scaleOut"
-          className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto justify-center md:justify-start max-w-full mt-4"
-        >
-          <Link href="/contact-me" className="w-full sm:w-auto max-w-full">
-            <Button className="font-semibold tracking-wide w-full sm:w-auto group relative overflow-hidden min-w-0">
-              <span className="relative z-10 flex items-center gap-2 truncate">
-                <HandshakeIcon className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
-                <span className="truncate">Let's Connect</span>
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </Button>
-          </Link>
-
-          {/* <Link href="/projects" className="w-full sm:w-auto"> */}
-          <Link href="/projects" className="w-full sm:w-auto max-w-full">
-            <Button
-              variant="outline"
-              className="group w-full sm:w-auto font-medium border-2 hover:border-primary min-w-0"
-            >
-              <span className="truncate">View My Work</span>
-              <div className="ml-2 group-hover:translate-x-1 transition-transform duration-200 flex-shrink-0">
-                →
-              </div>
-            </Button>
-          </Link>
-          {/* </Link> */}
-
-          {resumeUrl && (
+          {profile.location && profile.locationUrl && (
             <Link
-              href={resumeUrl}
+              href={profile.locationUrl}
               target="_blank"
-              download
-              className="w-full sm:w-auto max-w-full"
+              className="inline-block mt-2"
             >
               <Button
-                variant="secondary"
-                className="group w-full sm:w-auto font-medium min-w-0"
+                variant="outline"
+                size="sm"
+                className="font-mono text-xs uppercase tracking-widest rounded-none"
               >
-                <FaDownload className="w-3 h-3 sm:w-4 sm:h-4 mr-2 group-hover:animate-bounce flex-shrink-0" />
-                <span className="truncate">Resume</span>
+                <FaMapMarkerAlt className="w-3 h-3 mr-2" />
+                {profile.location}
               </Button>
             </Link>
           )}
-        </Reveal>
+
+          <Reveal className="mt-8 text-base md:text-lg text-foreground/80 leading-relaxed font-medium">
+            <RichText
+              className="text-balance break-words"
+              data={profile.bio as SerializedEditorState}
+            />
+          </Reveal>
+
+          {/* Action Buttons */}
+          <Reveal
+            delay={0.3}
+            type="bottomUp"
+            className="flex flex-col sm:flex-row items-center gap-4 mt-10"
+          >
+            <Link href="/contact-me" className="w-full sm:w-auto">
+              <Button className="w-full sm:w-auto font-mono uppercase tracking-widest rounded-none hover:bg-foreground hover:text-background transition-colors h-12 px-8">
+                <HandshakeIcon className="w-4 h-4 mr-2" />
+                Connect
+              </Button>
+            </Link>
+
+            <Link href="/projects" className="w-full sm:w-auto">
+              <Button
+                variant="outline"
+                className="w-full sm:w-auto font-mono uppercase tracking-widest rounded-none hover:bg-black/[0.02] dark:hover:bg-white/[0.02] h-12 px-8 transition-colors"
+              >
+                Work <span className="ml-2">→</span>
+              </Button>
+            </Link>
+
+            {resumeUrl && (
+              <Link
+                href={resumeUrl}
+                target="_blank"
+                download
+                className="w-full sm:w-auto"
+              >
+                <Button
+                  variant="secondary"
+                  className="w-full sm:w-auto font-mono uppercase tracking-widest rounded-none h-12 px-8"
+                >
+                  <FaDownload className="w-3 h-3 mr-2" />
+                  Resume
+                </Button>
+              </Link>
+            )}
+          </Reveal>
+        </div>
       </div>
 
-      <div className="flex flex-col gap-4 items-center flex-shrink-0">
+      <div className="flex flex-col items-center justify-center p-8 md:p-12 lg:p-16 relative">
+        <div className="absolute inset-0 diagonal-pattern opacity-50 pointer-events-none"></div>
         {/* Avatar */}
-        <div className="relative group flex-shrink-0 max-w-full">
-          <div className="absolute -inset-4 rounded-full transition-all duration-700"></div>
-          <div className="relative">
-            <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 xl:w-72 xl:h-72 rounded-full overflow-hidden transition-all duration-500 group-hover:scale-105">
-              <Image
-                src={avatarSrc}
-                alt={profile.name}
-                width={288}
-                height={288}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                priority
-              />
-            </div>
+        <div className="relative group w-full max-w-[280px] aspect-square bg-background border-2 border-foreground p-2 z-10 hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] transition-all duration-300">
+          <div className="relative w-full h-full overflow-hidden bg-muted">
+            <Image
+              src={avatarSrc}
+              alt={profile.name!}
+              fill
+              className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+              priority
+            />
           </div>
         </div>
 
-        {/* Social Links */}
-        <Reveal>
-          <div className="flex items-center justify-center lg:justify-start gap-3 flex-wrap max-w-full">
-            {profile.githubUrl && (
-              <Link
-                href={profile.githubUrl}
-                target="_blank"
-                className="p-2 rounded-full bg-background/50 backdrop-blur-sm border border-border hover:border-primary transition-all duration-300 hover:scale-110 group flex-shrink-0"
-              >
-                <FaGithub className="w-5 h-5 sm:w-6 sm:h-6 group-hover:text-primary transition-colors" />
-              </Link>
-            )}
-            {profile.linkedinUrl && (
-              <Link
-                href={profile.linkedinUrl}
-                target="_blank"
-                className="p-2 rounded-full bg-background/50 backdrop-blur-sm border border-border hover:border-primary transition-all duration-300 hover:scale-110 group flex-shrink-0"
-              >
-                <FaLinkedin className="w-5 h-5 sm:w-6 sm:h-6 group-hover:text-primary transition-colors" />
-              </Link>
-            )}
-            {profile.email && (
-              <Link
-                href={`mailto:${profile.email}`}
-                className="p-2 rounded-full bg-background/50 backdrop-blur-sm border border-border hover:border-primary transition-all duration-300 hover:scale-110 group flex-shrink-0"
-              >
-                <MailIcon className="w-5 h-5 sm:w-6 sm:h-6 group-hover:text-primary transition-colors" />
-              </Link>
-            )}
+        {/* Social Links Box */}
+        <Reveal className="w-full max-w-[280px] mt-6 z-10">
+          <div className="flex flex-wrap items-center justify-between border-2 border-foreground bg-background p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]">
+            <span className="font-mono text-xs font-bold uppercase tracking-widest text-foreground mr-4">
+              Socials
+            </span>
+            <div className="flex items-center gap-2">
+              {profile.githubUrl && (
+                <Link href={profile.githubUrl} target="_blank">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="rounded-none border-foreground hover:bg-foreground hover:text-background h-8 w-8"
+                  >
+                    <FaGithub className="w-4 h-4" />
+                  </Button>
+                </Link>
+              )}
+              {profile.linkedinUrl && (
+                <Link href={profile.linkedinUrl} target="_blank">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="rounded-none border-foreground hover:bg-foreground hover:text-background h-8 w-8"
+                  >
+                    <FaLinkedin className="w-4 h-4" />
+                  </Button>
+                </Link>
+              )}
+            </div>
           </div>
         </Reveal>
       </div>

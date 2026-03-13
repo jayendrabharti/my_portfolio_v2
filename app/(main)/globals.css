@@ -214,7 +214,7 @@
 }
 .page-rails::before,
 .page-rails::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   bottom: 0;
@@ -223,8 +223,12 @@
   pointer-events: none;
   z-index: 1;
 }
-.page-rails::before { left: var(--rail-offset); }
-.page-rails::after { right: var(--rail-offset); }
+.page-rails::before {
+  left: var(--rail-offset);
+}
+.page-rails::after {
+  right: var(--rail-offset);
+}
 
 /* Content bounded to rail edges */
 .rail-bounded {
@@ -240,7 +244,7 @@
   width: 100%;
 }
 .section-divider::before {
-  content: '';
+  content: "";
   position: absolute;
   left: var(--rail-offset, max(1rem, calc(50% - 36rem)));
   right: var(--rail-offset, max(1rem, calc(50% - 36rem)));
@@ -250,8 +254,29 @@
 
 /* Subtle dot pattern for section backgrounds */
 .dot-pattern {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
   background-size: 24px 24px;
+}
+
+/* Diagonal line pattern for structural areas */
+.diagonal-pattern {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--border) 0,
+    var(--border) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+}
+
+.diagonal-pattern-subtle {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(128, 128, 128, 0.15) 0,
+    rgba(128, 128, 128, 0.15) 1px,
+    transparent 1px,
+    transparent 8px
+  );
 }
 
 /* Custom scrollbar — matches dark themes */
@@ -260,8 +285,18 @@
   scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
 
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 3px; transition: background 0.3s ease; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
-
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

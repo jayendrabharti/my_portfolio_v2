@@ -3,6 +3,7 @@ import { getPayloadInstance } from "@/payload";
 import { ChevronDownIcon } from "lucide-react";
 import Link from "next/link";
 import BlogCard from "../blogs/BlogCard";
+import { Button } from "../ui/button";
 
 export default async function BlogsSection() {
   const payload = await getPayloadInstance();
@@ -27,31 +28,40 @@ export default async function BlogsSection() {
   return (
     <section
       id="blogs"
-      className="flex flex-col gap-4 py-8 px-4 rail-bounded"
+      className="flex flex-col gap-8 py-16 px-4 rail-bounded"
     >
-      <RevealHero className="text-3xl md:text-5xl font-bold tracking-wide">Blogs</RevealHero>
-      <p className="text-muted-foreground text-balance">
-        Check out my latest blogs on web development and design.
-      </p>
+      <div className="flex flex-col gap-2">
+         <RevealHero className="text-3xl md:text-5xl font-black uppercase tracking-tight">
+           Writing
+         </RevealHero>
+         <p className="text-muted-foreground font-mono text-sm uppercase tracking-widest max-w-xl">
+           Thoughts on web development and design
+         </p>
+      </div>
 
       {!(blogs.docs.length > 0) ? (
-        <span className="text-2xl font-extralight text-muted-foreground mx-auto">
-          No Featured Blogs
-        </span>
+         <div className="h-32 border border-dashed border-border flex items-center justify-center diagonal-pattern-subtle">
+           <span className="text-sm font-mono uppercase tracking-widest text-muted-foreground">
+             No Blogs Yet
+           </span>
+         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border border border-border">
           {blogs.docs.map((blog) => (
-            <BlogCard key={blog.id} blog={blog} />
+             <div key={blog.id} className="bg-background h-full flex flex-col">
+               <BlogCard blog={blog} />
+             </div>
           ))}
         </div>
       )}
-      <Link
-        href={"/blogs"}
-        className="mx-auto flex flex-row items-center text-zinc-600 dark:text-zinc-400 hover:text-black hover:dark:text-white font-bold tracking-wide gap-1"
-      >
-        <ChevronDownIcon />
-        View All Blogs
-      </Link>
+      
+      <div className="flex justify-center mt-4">
+        <Link href={"/blogs"}>
+          <Button variant="outline" className="rounded-none font-mono uppercase tracking-widest px-8">
+            All Articles <ChevronDownIcon className="w-4 h-4 ml-2" />
+          </Button>
+        </Link>
+      </div>
     </section>
   );
 }

@@ -21,28 +21,33 @@ export default async function SkillsSection() {
   return (
     <section
       id="skills"
-      className="flex flex-col py-16 px-4 rail-bounded"
+      className="flex flex-col gap-8 py-16 px-4 rail-bounded"
     >
-      <RevealHero className="text-3xl md:text-5xl font-bold tracking-wide">
-        Skills & Technologies
-      </RevealHero>
-      <p className="text-muted-foreground">
-        Here are the technologies and tools I work with to bring ideas to life
-      </p>
+      <div className="flex flex-col gap-2">
+         <RevealHero className="text-3xl md:text-5xl font-black uppercase tracking-tight">
+           Tech Stack
+         </RevealHero>
+         <p className="text-muted-foreground font-mono text-sm uppercase tracking-widest max-w-xl">
+           Arsenal of tools and technologies
+         </p>
+      </div>
 
-      <div className="flex flex-row items-center flex-wrap gap-8 md:gap-12 justify-center mt-4">
-        {!skills.items?.length && (
-          <span className="text-2xl font-extralight text-muted-foreground mx-auto">
-            No Skills Yet
-          </span>
-        )}
+      <div className="relative border border-border bg-background p-8 lg:p-12">
+        <div className="absolute inset-0 diagonal-pattern opacity-10 pointer-events-none"></div>
+        <div className="relative z-10 flex flex-row flex-wrap gap-4 md:gap-6 justify-center">
+          {!skills.items?.length && (
+            <span className="text-sm font-mono uppercase tracking-widest text-muted-foreground mx-auto">
+              No Skills Logged
+            </span>
+          )}
 
-        {skills.items &&
-          skills.items.map((skill: Skill, index: number) => (
-            <Reveal key={skill.id} delay={index * 0.1}>
-              <SkillItem skill={skill} />
-            </Reveal>
-          ))}
+          {skills.items &&
+            skills.items.map((skill: Skill, index: number) => (
+              <Reveal key={skill.id} delay={index * 0.05}>
+                <SkillItem skill={skill} />
+              </Reveal>
+            ))}
+        </div>
       </div>
     </section>
   );
@@ -55,26 +60,27 @@ function SkillItem({ skill }: { skill: Skill }) {
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        "flex flex-col items-center relative",
-        "border border-dashed border-border p-4 bg-transparent hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors rounded-none group",
+        "flex flex-col items-center justify-center relative w-20 h-20 md:w-24 md:h-24",
+        "border border-border bg-background hover:bg-muted group transition-all duration-300",
+        "hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]"
       )}
     >
       <img
         src={skill.iconUrl}
         alt={skill.name}
-        className="size-16"
+        className="w-8 h-8 md:w-10 md:h-10 grayscale group-hover:grayscale-0 transition-all duration-300"
       />
-      <Badge
+      <div
         className={cn(
-          "absolute top-full left-1/2 transform -translate-x-1/2",
-          "-translate-y-2 group-hover:translate-y-0",
+          "absolute top-[calc(100%+0.5rem)] left-1/2 transform -translate-x-1/2 z-50",
           "opacity-0 group-hover:opacity-100",
-          "scale-0 group-hover:scale-100",
-          "transition-all duration-150",
+          "transition-all duration-150 pointer-events-none",
         )}
       >
-        {skill.name}
-      </Badge>
+         <Badge className="rounded-none font-mono text-[10px] uppercase tracking-widest shadow-none border-border whitespace-nowrap">
+           {skill.name}
+         </Badge>
+      </div>
     </Link>
   );
 }

@@ -65,140 +65,122 @@ export default function ContactPage() {
 
   if (sent)
     return (
-      <div className="w-full h-full flex items-center justify-center flex-col text-green-500 gap-2">
-        <CheckCheckIcon className="size-20" />
-        <span className="text-2xl font-bold">
-          Message was sent successfully!!
-        </span>
-
-        <Link
-          href={"/"}
-          className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6  text-black dark:text-white inline-block active:scale-75 transition-all duration-200"
-        >
-          <span className="absolute inset-0 overflow-hidden rounded-full">
-            <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      <div className="w-full h-[calc(100vh-200px)] flex flex-col items-center justify-center p-4">
+        <div className="border-[3px] border-border bg-background p-12 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] flex flex-col items-center gap-6 relative overflow-hidden group">
+          <div className="absolute inset-0 diagonal-pattern opacity-10 pointer-events-none" />
+          <CheckCheckIcon className="size-20 relative z-10 text-primary" />
+          <span className="text-2xl md:text-3xl font-black uppercase tracking-widest text-center relative z-10">
+            TRANSMISSION SECURED
           </span>
-          <div className="relative flex space-x-2 items-center z-10 rounded-full bg-zinc-300 dark:bg-zinc-900 py-0.5 px-4 ring-1 ring-white/10 ">
-            <span>Go to Homepage</span>
-            <svg
-              fill="none"
-              height="16"
-              viewBox="0 0 24 24"
-              width="16"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M10.75 8.75L14.25 12L10.75 15.25"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.5"
-              />
-            </svg>
-          </div>
-          <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40" />
-        </Link>
+          <p className="font-mono text-xs tracking-widest text-muted-foreground uppercase text-center relative z-10">
+            Your message has been successfully logged into the system.
+          </p>
+          <Link
+            href="/"
+            className="mt-4 relative z-10 border-2 border-border bg-primary text-primary-foreground px-8 py-4 font-mono font-bold text-sm tracking-widest uppercase hover:-translate-y-[2px] hover:-translate-x-[2px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] dark:hover:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] transition-all"
+          >
+            RETURN TO HUB
+          </Link>
+        </div>
       </div>
     );
 
   return (
-    <section>
-      <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-        <h2 className="mb-4 text-2xl md:text-4xl font-extrabold text-center text-zinc-800 dark:text-zinc-100">
-          Contact Me
+    <section className="flex flex-col gap-0 py-8 px-4 rail-bounded min-h-[calc(100vh-200px)]">
+      <div className="border-[3px] border-border bg-background p-8 md:p-12 mb-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] relative overflow-hidden">
+        <div className="absolute inset-0 diagonal-pattern opacity-10 pointer-events-none" />
+        <h2 className="relative z-10 text-4xl md:text-6xl font-black tracking-tighter uppercase">
+          SYSTEM_CONTACT
         </h2>
-        <p className="mb-8 lg:mb-16 font-light text-center text-zinc-600 dark:text-zinc-400 sm:text-xl">
-          Want a website/webapp made? Contact me and i will respond as soon as i
-          can.
+        <p className="relative z-10 font-mono text-sm mt-4 tracking-widest text-muted-foreground uppercase max-w-lg">
+          INITIATE A DIRECT SECURE CONNECTION.
         </p>
+      </div>
 
+      <div className="border-2 border-border p-8 bg-background relative">
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
           {({ isSubmitting }) => (
-            <Form className="space-y-8">
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-zinc-700 dark:text-zinc-300"
-                >
-                  Your email
+            <Form className="space-y-6 flex flex-col font-mono text-sm uppercase font-bold tracking-widest">
+              <div className="flex flex-col gap-2">
+                <label htmlFor="email" className="text-foreground">
+                  IDENTIFIER: E-MAIL
                 </label>
                 <Field
                   type="email"
                   name="email"
-                  className="shadow-sm bg-zinc-50 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm rounded-lg block w-full p-2.5 placeholder-zinc-400 dark:placeholder-zinc-500"
-                  placeholder="Your E-mail Address"
+                  className="border-2 border-border bg-background p-4 outline-none focus:ring-2 focus:ring-primary transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] placeholder:text-muted-foreground placeholder:font-normal"
+                  placeholder="name@domain.com"
                 />
                 <ErrorMessage
                   name="email"
                   component="div"
-                  className="text-red-500 text-xs"
+                  className="text-red-500 text-xs mt-1 bg-red-500/10 border border-red-500 p-2"
                 />
               </div>
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block mb-2 text-sm font-medium text-zinc-700 dark:text-zinc-300"
-                >
-                  Your Name & other information
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="name" className="text-foreground">
+                  IDENTIFIER: NAME
                 </label>
                 <Field
                   type="text"
                   name="name"
-                  className="shadow-sm bg-zinc-50 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm rounded-lg block w-full p-2.5 placeholder-zinc-400 dark:placeholder-zinc-500"
-                  placeholder="Enter your Name & other information"
+                  className="border-2 border-border bg-background p-4 outline-none focus:ring-2 focus:ring-primary transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] placeholder:text-muted-foreground placeholder:font-normal"
+                  placeholder="JOHN DOE"
                 />
                 <ErrorMessage
                   name="name"
                   component="div"
-                  className="text-red-500 text-xs"
+                  className="text-red-500 text-xs mt-1 bg-red-500/10 border border-red-500 p-2"
                 />
               </div>
-              <div>
-                <label
-                  htmlFor="subject"
-                  className="block mb-2 text-sm font-medium text-zinc-700 dark:text-zinc-300"
-                >
-                  Subject
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="subject" className="text-foreground">
+                  COMMUNICATION SUBJECT
                 </label>
                 <Field
                   type="text"
                   name="subject"
-                  className="shadow-sm bg-zinc-50 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm rounded-lg block w-full p-2.5 placeholder-zinc-400 dark:placeholder-zinc-500"
-                  placeholder="How can we assist you?"
+                  className="border-2 border-border bg-background p-4 outline-none focus:ring-2 focus:ring-primary transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] placeholder:text-muted-foreground placeholder:font-normal"
+                  placeholder="PROPOSAL DETAILS"
                 />
                 <ErrorMessage
                   name="subject"
                   component="div"
-                  className="text-red-500 text-xs"
+                  className="text-red-500 text-xs mt-1 bg-red-500/10 border border-red-500 p-2"
                 />
               </div>
-              <div className="sm:col-span-2">
-                <label
-                  htmlFor="message"
-                  className="block mb-2 text-sm font-medium text-zinc-700 dark:text-zinc-300"
-                >
-                  Your message
+
+              <div className="flex flex-col gap-2 sm:col-span-2">
+                <label htmlFor="message" className="text-foreground">
+                  PAYLOAD
                 </label>
                 <Field
                   as="textarea"
                   name="message"
-                  rows="6"
-                  className="shadow-sm bg-zinc-50 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm rounded-lg block w-full p-2.5 placeholder-zinc-400 dark:placeholder-zinc-500"
-                  placeholder="Leave a message..."
+                  rows={6}
+                  className="border-2 border-border bg-background p-4 outline-none focus:ring-2 focus:ring-primary transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] placeholder:text-muted-foreground placeholder:font-normal resize-none"
+                  placeholder="TRANSMIT MESSAGE HERE..."
                 />
                 <ErrorMessage
                   name="message"
                   component="div"
-                  className="text-red-500 text-xs"
+                  className="text-red-500 text-xs mt-1 bg-red-500/10 border border-red-500 p-2"
                 />
               </div>
-              <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Sending message ..." : "Send message"}
-                <Send className="transition-all duration-300 ml-2 group-hover:ml-5" />
+
+              <Button 
+                type="submit" 
+                disabled={isSubmitting}
+                className="mt-6 border-2 border-border !rounded-none bg-primary text-primary-foreground p-6 font-mono font-bold text-sm tracking-widest uppercase hover:-translate-y-[2px] hover:-translate-x-[2px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] dark:hover:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] transition-all flex items-center justify-center gap-4 w-full sm:w-auto self-start"
+              >
+                {isSubmitting ? "TRANSMITTING..." : "DISPATCH TRANSMISSION"}
+                <Send className="w-5 h-5" />
               </Button>
             </Form>
           )}

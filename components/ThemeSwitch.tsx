@@ -23,13 +23,16 @@ const ThemeSwitch: React.FC<ThemeSwitchProps> = ({ className }) => {
       variant={"outline"}
       size={"icon"}
       onClick={switchTheme}
-      className={cn("relative rounded-full", className)}
+      className={cn(
+        "relative rounded-none border-2 border-border shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]", 
+        className
+      )}
     >
       <Moon
-        className={`absolute scale-0 dark:scale-125 transition-all duration-400 rotate-180 dark:rotate-0`}
+        className={`absolute scale-0 dark:scale-100 transition-all duration-400 rotate-180 dark:rotate-0  w-4 h-4`}
       />
       <Sun
-        className={`absolute scale-125 dark:scale-0 transition-all duration-400 dark:-rotate-180 rotate-0`}
+        className={`absolute scale-100 dark:scale-0 transition-all duration-400 dark:-rotate-180 rotate-0 w-4 h-4`}
       />
     </Button>
   );

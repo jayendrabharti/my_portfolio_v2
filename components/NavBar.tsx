@@ -14,7 +14,6 @@ import { usePathname } from "next/navigation";
 import ThemeSwitch from "./ThemeSwitch";
 import { useState } from "react";
 import { Button } from "./ui/button";
-import Reveal from "./animations/Reveal";
 import { anurati } from "@/utils/fonts";
 import { Profile, Setting } from "@/payload/payload-types";
 
@@ -31,12 +30,12 @@ export default function NavBar({
   const [expanded, setExpanded] = useState(false);
 
   const NavBarLinks = [
-    { name: "Home", href: "/", icon: FaHome },
+    { name: "HOME", href: "/", icon: FaHome },
     ...(settings?.projects
-      ? [{ name: "Projects", href: "/projects", icon: PencilRulerIcon }]
+      ? [{ name: "PROJECTS", href: "/projects", icon: PencilRulerIcon }]
       : []),
     ...(settings?.blogs
-      ? [{ name: "Blogs", href: "/blogs", icon: ScrollTextIcon }]
+      ? [{ name: "BLOGS", href: "/blogs", icon: ScrollTextIcon }]
       : []),
   ];
 
@@ -50,46 +49,26 @@ export default function NavBar({
     <nav
       className={cn(
         className,
-        `w-full`,
-        `border-border border-b `,
-        `sticky top-0 left-0 z-50`,
-        `flex flex-row items-center py-4 flex-shrink-0`,
-        `bg-background transition-all duration-200`,
+        `w-full border-border border-b-2 bg-background sticky top-0 left-0 z-50 transition-all duration-200`,
       )}
     >
-      <Reveal
+      <div
         className={cn(
           "flex items-center justify-between",
-          "mx-auto px-5 md:px-10",
-          "w-full max-w-6xl gap-3",
+          "mx-auto px-4 md:px-8",
+          "w-full max-w-[var(--rail-width)] h-16 md:border-x-2 md:border-border",
         )}
       >
         <Link
           href="/"
           prefetch={true}
-          className={cn(anurati.className, "cursor-pointer text-2xl font-bold")}
+          className={cn(anurati.className, "cursor-pointer text-xl font-black tracking-[0.2em]")}
         >
           {profile?.logoText.toUpperCase()}
         </Link>
 
-        <div
-          className={cn(
-            `flex flex-col md:flex-row`,
-            `items-start md:items-center`,
-            `justify-end`, //change this value for links positioning
-            `gap-2 md:gap-1`,
-            `top-full left-0 w-full`,
-            "px-5 py-4 md:p-0",
-            "absolute md:static",
-            "transition-all duration-200",
-            " md:shadow-none",
-            expanded
-              ? "translate-y-0 scale-y-100"
-              : "-translate-y-1/2 scale-y-0 md:translate-y-0 md:scale-y-100",
-            expanded && "bg-background",
-            `border-border border-b-2 md:border-0`,
-          )}
-        >
+        {/* Desktop links */}
+        <div className="hidden md:flex flex-row items-center gap-6 h-full font-mono text-xs tracking-widest font-bold">
           {NavBarLinks.map((link, index) => {
             const active = isActive(link.href);
             return (
@@ -97,67 +76,94 @@ export default function NavBar({
                 key={index}
                 prefetch={true}
                 href={link.href}
-                onClick={() => setExpanded(false)}
                 className={cn(
-                  "flex flex-row items-center",
-                  "rounded-full px-5 py-2 font-bold md:px-2.5 md:py-1",
-                  active && "bg-primary text-background",
-                  !active &&
-                    "hover:bg-accent text-muted-foreground hover:text-primary",
-                  "ring-muted-foreground active:ring-4",
-                  "transition-all duration-300",
-                  "w-full md:w-max",
+                  "flex items-center gap-2 h-full px-2 border-b-2 transition-all duration-200",
+                  active ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-primary hover:border-primary/50",
                 )}
               >
-                <link.icon className="mr-1.5 size-4" />
+                <link.icon className="size-4" />
                 {link.name}
               </Link>
             );
           })}
         </div>
 
-        <ThemeSwitch className={"ml-auto md:ml-0"} />
+        <div className="flex items-center gap-4">
+          <Button
+            variant={"outline"}
+            size={"sm"}
+            onClick={() => {
+              document.dispatchEvent(
+                new KeyboardEvent("keydown", { key: "k", ctrlKey: true }),
+              );
+            }}
+            className="hidden md:flex items-center gap-2 text-xs text-muted-foreground h-8 px-3 border-2 border-border rounded-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]"
+          >
+            <SearchIcon className="w-3 h-3" />
+            <kbd className="font-mono text-[10px] font-bold tracking-widest">
+              CMD+K
+            </kbd>
+          </Button>
+          
+          <ThemeSwitch className="hidden md:flex" />
 
-        <Button
-          variant={"outline"}
-          size={"sm"}
-          onClick={() => {
-            document.dispatchEvent(
-              new KeyboardEvent("keydown", { key: "k", ctrlKey: true }),
-            );
-          }}
-          className="hidden md:flex items-center gap-1.5 text-xs text-muted-foreground h-8 px-2"
-        >
-          <SearchIcon className="w-3 h-3" />
-          <kbd className="rounded border border-border bg-muted px-1 py-0.5 font-mono text-[10px]">
-            ⌘K
-          </kbd>
-        </Button>
+          {/* Mobile Menu Toggle */}
+          <Button
+            variant={"outline"}
+            size={"icon"}
+            onClick={(e) => {
+              setExpanded((prev) => !prev);
+              e.stopPropagation();
+            }}
+            className={cn("flex md:hidden border-2 border-border rounded-none h-10 w-10 relative overflow-hidden")}
+          >
+            <X
+              className={cn(
+                "absolute transition-all duration-200",
+                expanded ? "scale-100 rotate-0" : "scale-0 rotate-90",
+              )}
+            />
+            <Menu
+              className={cn(
+                "absolute transition-all duration-200",
+                expanded ? "scale-0 -rotate-90" : "scale-100 rotate-0",
+              )}
+            />
+          </Button>
+        </div>
+      </div>
 
-        <Button
-          variant={"ghost"}
-          size={"icon"}
-          onClick={(e) => {
-            setExpanded((prev) => !prev);
-            e.stopPropagation();
-          }}
-          className={cn("relative flex md:hidden")}
-        >
-          <X
-            className={cn(
-              "absolute transition-all duration-200",
-              expanded ? "scale-200 rotate-180" : "scale-0 rotate-0",
-            )}
-          />
-
-          <Menu
-            className={cn(
-              "absolute transition-all duration-200",
-              expanded ? "scale-0 rotate-180" : "scale-200 rotate-0",
-            )}
-          />
-        </Button>
-      </Reveal>
+      {/* Mobile Menu Content */}
+      <div 
+        className={cn(
+          "md:hidden flex flex-col w-full border-t-2 border-border bg-background diagonal-pattern-subtle",
+          "transition-all duration-300 overflow-hidden absolute left-0 top-[64px]",
+          expanded ? "max-h-96 border-b-2" : "max-h-0 border-b-0"
+        )}
+      >
+        {NavBarLinks.map((link, index) => {
+          const active = isActive(link.href);
+          return (
+            <Link
+              key={index}
+              prefetch={true}
+              href={link.href}
+              onClick={() => setExpanded(false)}
+              className={cn(
+                "flex flex-row items-center gap-3 w-full px-6 py-4 font-mono text-sm tracking-widest font-bold border-b border-border/50",
+                active ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-accent hover:text-foreground",
+              )}
+            >
+              <link.icon className="size-4" />
+              {link.name}
+            </Link>
+          );
+        })}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border/50">
+          <span className="font-mono text-xs font-bold tracking-widest text-muted-foreground">THEME</span>
+          <ThemeSwitch />
+        </div>
+      </div>
     </nav>
   );
 }
