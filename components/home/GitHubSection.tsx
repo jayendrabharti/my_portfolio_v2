@@ -69,7 +69,7 @@ export default async function GitHubSection() {
               <span className="w-2 h-2 bg-primary mr-2" />
               Contribution Calendar
             </h3>
-            <div className="flex-1 flex items-center justify-center -mx-4 sm:mx-0 overflow-x-auto">
+            <div className="flex-1 flex items-center justify-center overflow-visible">
               <GitHubContributionCalendar username={username} />
             </div>
           </div>

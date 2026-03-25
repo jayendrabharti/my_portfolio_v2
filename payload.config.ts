@@ -9,6 +9,7 @@ import { Media } from "./payload/collections/Media";
 import { Blogs } from "./payload/collections/Blogs";
 import { Projects } from "./payload/collections/Projects";
 import { WorkExperience } from "./payload/collections/WorkExperience";
+import { Education } from "./payload/collections/Education";
 import { Contact } from "./payload/collections/Contact";
 import { Profile } from "./payload/globals/Profile";
 import { Skills } from "./payload/globals/Skills";
@@ -28,7 +29,7 @@ export default buildConfig({
   },
   editor: lexicalEditor(),
   globals: [Profile, Skills, Settings],
-  collections: [Users, Blogs, Projects, Media, WorkExperience, Contact],
+  collections: [Users, Blogs, Projects, Media, WorkExperience, Education, Contact],
   secret: process.env.PAYLOAD_SECRET || "",
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || "",

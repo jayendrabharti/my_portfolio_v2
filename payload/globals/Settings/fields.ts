@@ -15,6 +15,12 @@ const fields: Field[] = [
           },
           {
             type: "checkbox",
+            name: "education",
+            label: "Education",
+            defaultValue: true,
+          },
+          {
+            type: "checkbox",
             name: "projects",
             label: "Projects",
             defaultValue: true,

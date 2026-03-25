@@ -107,7 +107,6 @@ export default async function HeroSection({
               <Link
                 href={resumeUrl}
                 target="_blank"
-                download
                 className="w-full sm:w-auto"
               >
                 <Button
