@@ -51,7 +51,7 @@ export default async function HeroSection({
       <div className="flex flex-col justify-center gap-8 p-8 md:p-12 lg:p-16 border-b border-border md:border-b-0 md:border-r border-dashed diagonal-pattern-subtle">
         <div className="bg-background/80 backdrop-blur-[2px] p-6 border border-border">
           <RevealHero>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-sans font-black uppercase tracking-tight leading-none break-words">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-sans font-black uppercase tracking-tight leading-none break-words text-right">
               {profile.name}
             </h1>
           </RevealHero>
@@ -76,7 +76,7 @@ export default async function HeroSection({
 
           <Reveal className="mt-8 text-base md:text-lg text-foreground/80 leading-relaxed font-medium">
             <RichText
-              className="text-balance break-words"
+              className="break-words"
               data={profile.bio as SerializedEditorState}
             />
           </Reveal>
