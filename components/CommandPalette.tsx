@@ -2,17 +2,31 @@
 
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { FaHome, FaGithub, FaLinkedin } from "react-icons/fa";
+import { Profile } from "@/payload/payload-types";
+import { anurati } from "@/utils/fonts";
+import { cn } from "@/lib/utils";
+import {
+  FaHome,
+  FaGlobe,
+} from "react-icons/fa";
+import {
+  BsGithub,
+  BsInstagram,
+  BsLinkedin,
+  BsTwitterX,
+} from "react-icons/bs";
 import {
   PencilRulerIcon,
-  ScrollTextIcon,
   MailIcon,
   SearchIcon,
-  CommandIcon,
   CodeIcon,
   BrainCircuitIcon,
   BriefcaseIcon,
   X,
+  GraduationCapIcon,
+  DownloadIcon,
+  ArrowUpIcon,
+  CommandIcon,
 } from "lucide-react";
 
 interface CommandItem {
@@ -25,11 +39,9 @@ interface CommandItem {
 }
 
 export default function CommandPalette({
-  githubUrl,
-  linkedinUrl,
+  profile,
 }: {
-  githubUrl?: string | null;
-  linkedinUrl?: string | null;
+  profile: Profile;
 }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -66,86 +78,124 @@ export default function CommandPalette({
     const items: CommandItem[] = [
       {
         id: "home",
-        label: "Home",
+        label: "Return to Home",
         icon: <FaHome className="w-4 h-4" />,
         action: () => router.push("/"),
-        keywords: ["home", "main", "landing"],
+        keywords: ["home", "main", "landing", "start"],
         section: "Navigation",
       },
-      {
-        id: "projects",
-        label: "Projects",
-        icon: <PencilRulerIcon className="w-4 h-4" />,
-        action: () => router.push("/projects"),
-        keywords: ["projects", "work", "portfolio"],
-        section: "Navigation",
-      },
-      {
-        id: "blogs",
-        label: "Blogs",
-        icon: <ScrollTextIcon className="w-4 h-4" />,
-        action: () => router.push("/blogs"),
-        keywords: ["blogs", "articles", "writing", "posts"],
-        section: "Navigation",
-      },
-      {
-        id: "contact",
-        label: "Contact Me",
-        icon: <MailIcon className="w-4 h-4" />,
-        action: () => router.push("/contact-me"),
-        keywords: ["contact", "email", "message", "reach"],
-        section: "Navigation",
-      },
-      {
-        id: "tech-stack",
-        label: "Tech Stack",
-        icon: <CodeIcon className="w-4 h-4" />,
-        action: () => router.push("/tech-stack"),
-        keywords: ["tech", "stack", "technology", "built with"],
-        section: "Navigation",
-      },
+      // Sections
       {
         id: "skills",
-        label: "Skills",
+        label: "Systems & Technologies",
         icon: <BrainCircuitIcon className="w-4 h-4" />,
         action: () => scrollToSection("skills"),
-        keywords: ["skills", "technologies", "tools"],
-        section: "Sections",
+        keywords: ["skills", "technologies", "tools", "stack", "tech"],
+        section: "Internal Sections",
       },
       {
         id: "experience",
-        label: "Work Experience",
+        label: "Operational History",
         icon: <BriefcaseIcon className="w-4 h-4" />,
         action: () => scrollToSection("work-experience"),
-        keywords: ["work", "experience", "career", "jobs"],
-        section: "Sections",
+        keywords: ["work", "experience", "career", "jobs", "history"],
+        section: "Internal Sections",
+      },
+      {
+        id: "education",
+        label: "Academic Training",
+        icon: <GraduationCapIcon className="w-4 h-4" />,
+        action: () => scrollToSection("education"),
+        keywords: ["education", "studies", "degree", "college", "university"],
+        section: "Internal Sections",
+      },
+      {
+        id: "projects",
+        label: "Featured Deployments",
+        icon: <PencilRulerIcon className="w-4 h-4" />,
+        action: () => scrollToSection("projects"),
+        keywords: ["projects", "work", "portfolio", "builds", "code"],
+        section: "Internal Sections",
+      },
+      {
+        id: "contact",
+        label: "Secure Transmission / Contact",
+        icon: <MailIcon className="w-4 h-4" />,
+        action: () => scrollToSection("contact"),
+        keywords: ["contact", "email", "message", "reach", "hire"],
+        section: "Internal Sections",
+      },
+      // Socials
+      {
+        id: "github",
+        label: "GitHub Network",
+        icon: <BsGithub className="w-4 h-4" />,
+        action: () => window.open(profile.githubUrl ?? "", "_blank"),
+        keywords: ["github", "code", "repos", "open source"],
+        section: "External Networks",
+      },
+      {
+        id: "linkedin",
+        label: "LinkedIn Professional",
+        icon: <BsLinkedin className="w-4 h-4" />,
+        action: () => window.open(profile.linkedinUrl ?? "", "_blank"),
+        keywords: ["linkedin", "professional", "network"],
+        section: "External Networks",
       },
     ];
 
-    if (githubUrl) {
+    // Add extra socials from array
+    profile.socials?.forEach((social, idx) => {
+      const lowercaseUrl = social.url.toLowerCase();
+      let icon = <FaGlobe className="w-4 h-4" />;
+      let label = social.name;
+
+      if (lowercaseUrl.includes("instagram.com")) {
+        icon = <BsInstagram className="w-4 h-4" />;
+        label = "Instagram";
+      } else if (lowercaseUrl.includes("twitter.com") || lowercaseUrl.includes("x.com")) {
+        icon = <BsTwitterX className="w-4 h-4" />;
+        label = "X / Twitter";
+      } else {
+        // Only include specified platforms for now to keep it clean, 
+        // or uncomment below to include all
+        // items.push({ ... });
+        return;
+      }
+
       items.push({
-        id: "github",
-        label: "GitHub Profile",
-        icon: <FaGithub className="w-4 h-4" />,
-        action: () => window.open(githubUrl, "_blank"),
-        keywords: ["github", "code", "repos", "open source"],
-        section: "External Links",
+        id: `social-${idx}`,
+        label: `${label} Connection`,
+        icon,
+        action: () => window.open(social.url, "_blank"),
+        keywords: [label.toLowerCase(), "social", "network"],
+        section: "External Networks",
+      });
+    });
+
+    // Actions
+    if (profile.resume && typeof profile.resume === "object") {
+      items.push({
+        id: "resume",
+        label: "Download Dossier / Resume",
+        icon: <DownloadIcon className="w-4 h-4" />,
+        action: () => window.open((profile.resume as any).url, "_blank"),
+        keywords: ["resume", "cv", "download", "pdf"],
+        section: "Quick Actions",
       });
     }
 
-    if (linkedinUrl) {
-      items.push({
-        id: "linkedin",
-        label: "LinkedIn Profile",
-        icon: <FaLinkedin className="w-4 h-4" />,
-        action: () => window.open(linkedinUrl, "_blank"),
-        keywords: ["linkedin", "professional", "network"],
-        section: "External Links",
-      });
-    }
+    items.push({
+      id: "scroll-top",
+      label: "Zero Offset (Return to Top)",
+      icon: <ArrowUpIcon className="w-4 h-4" />,
+      action: () => window.scrollTo({ top: 0, behavior: "smooth" }),
+      keywords: ["top", "scroll", "up", "reset"],
+      section: "Quick Actions",
+    });
 
     return items;
-  }, [router, githubUrl, linkedinUrl, scrollToSection]);
+  }, [router, profile, scrollToSection]);
 
   const filtered = useMemo(() => {
     if (!query) return commands;
@@ -212,7 +262,6 @@ export default function CommandPalette({
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [open, filtered, selectedIndex, runCommand]);
 
-  // Reset selection when query changes
   useEffect(() => {
     setSelectedIndex(0);
   }, [query]);
@@ -223,92 +272,137 @@ export default function CommandPalette({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-start justify-center pt-[20vh]"
+      className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] p-4"
       onClick={() => {
         setOpen(false);
         setQuery("");
       }}
     >
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-background/90 backdrop-blur-md" />
 
-      {/* Palette */}
       <div
-        className="relative w-full max-w-lg mx-4 rounded-none border-4 border-border bg-card shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] overflow-hidden animate-in fade-in zoom-in-95 duration-150"
+        className="relative w-full max-w-2xl border-2 border-border bg-background shadow-[12px_12px_0px_0px_rgba(var(--primary-rgb),0.1)] overflow-hidden animate-in fade-in slide-in-from-top-4 duration-300"
         onClick={(e) => e.stopPropagation()}
       >
+        <div className="absolute inset-0 diagonal-pattern opacity-5 pointer-events-none" />
+        
+        {/* Header */}
+        <div className="flex items-center justify-between border-b border-border bg-muted/30 px-6 py-4">
+          <div className="flex items-center gap-3">
+            <CommandIcon className="size-4 text-primary" />
+            <span className={cn("text-lg tracking-widest uppercase font-black", anurati.className)}>
+              Command_Center
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[10px] uppercase font-bold text-muted-foreground bg-muted px-2 py-1 border border-border">
+              AUTH_LEVEL: HIGH
+            </span>
+            <button
+              onClick={() => {
+                setOpen(false);
+                setQuery("");
+              }}
+              className="hover:bg-muted p-1 border border-transparent hover:border-border transition-all"
+            >
+              <X className="size-4" />
+            </button>
+          </div>
+        </div>
+
         {/* Search Input */}
-        <div className="flex items-center gap-3 border-b border-border px-4">
-          <SearchIcon className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+        <div className="flex items-center gap-4 px-6 py-4 bg-background/50 relative z-10 border-b border-border">
+          <SearchIcon className="size-5 text-muted-foreground" />
           <input
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Type a command or search..."
-            className="flex-1 bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground"
+            placeholder="INPUT COMMAND OR KEYWORD..."
+            className="flex-1 bg-transparent text-sm font-mono font-bold outline-none placeholder:text-muted-foreground/40 uppercase tracking-widest"
           />
-          <button
-            onClick={() => {
-              setOpen(false);
-              setQuery("");
-            }}
-            className="text-muted-foreground hover:text-foreground p-1"
-          >
-            <X className="w-4 h-4" />
-          </button>
         </div>
 
         {/* Results */}
-        <div className="max-h-[300px] overflow-y-auto p-2">
+        <div className="max-h-[450px] overflow-y-auto custom-scrollbar relative z-10">
           {filtered.length === 0 && (
-            <p className="py-6 text-center text-sm text-muted-foreground">
-              No results found.
-            </p>
+            <div className="py-12 flex flex-col items-center justify-center gap-4 text-muted-foreground">
+              <span className="font-mono text-xs uppercase tracking-[0.3em] font-black">
+                [ ERROR: NO_MATCHES_FOUND ]
+              </span>
+            </div>
           )}
 
-          {Array.from(sections.entries()).map(([section, items]) => (
-            <div key={section}>
-              <p className="px-2 py-1.5 text-xs font-medium text-muted-foreground">
-                {section}
-              </p>
-              {items.map((cmd) => {
-                flatIndex++;
-                const idx = flatIndex;
-                return (
-                  <button
-                    key={cmd.id}
-                    onClick={() => runCommand(cmd)}
-                    onMouseEnter={() => setSelectedIndex(idx)}
-                    className={`flex w-full items-center gap-3 rounded-none px-3 py-2.5 text-sm transition-colors ${
-                      selectedIndex === idx
-                        ? "bg-accent text-accent-foreground"
-                        : "text-foreground hover:bg-accent/50"
-                    }`}
-                  >
-                    <span className="text-muted-foreground">{cmd.icon}</span>
-                    <span>{cmd.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          ))}
+          <div className="p-2 flex flex-col gap-1">
+            {Array.from(sections.entries()).map(([section, items]) => (
+              <div key={section} className="flex flex-col gap-1 mb-4">
+                <div className="px-4 py-2 flex items-center gap-3">
+                  <div className="h-[1px] flex-1 bg-border/50" />
+                  <span className="font-mono text-[10px] font-black uppercase tracking-[0.2em] text-primary/60">
+                    {section}
+                  </span>
+                  <div className="h-[1px] flex-1 bg-border/50" />
+                </div>
+                {items.map((cmd) => {
+                  flatIndex++;
+                  const idx = flatIndex;
+                  const isActive = selectedIndex === idx;
+                  return (
+                    <button
+                      key={cmd.id}
+                      onClick={() => runCommand(cmd)}
+                      onMouseEnter={() => setSelectedIndex(idx)}
+                      className={cn(
+                        "group flex w-full items-center justify-between px-4 py-3 transition-all relative overflow-hidden",
+                        isActive 
+                          ? "bg-primary text-primary-foreground" 
+                          : "text-foreground hover:bg-muted/50"
+                      )}
+                    >
+                      <div className="flex items-center gap-4 relative z-10">
+                        <span className={cn(
+                          "transition-transform duration-300",
+                          isActive ? "scale-110" : "text-muted-foreground"
+                        )}>
+                          {cmd.icon}
+                        </span>
+                        <span className="font-mono text-xs font-bold uppercase tracking-widest text-left">
+                          {cmd.label}
+                        </span>
+                      </div>
+                      
+                      {isActive && (
+                        <span className="font-mono text-[10px] font-black opacity-50 relative z-10">
+                          EXECUTE_
+                        </span>
+                      )}
+                      
+                      <div className={cn(
+                        "absolute inset-0 bg-primary/10 transition-transform duration-300 -translate-x-full group-hover:translate-x-0",
+                        isActive && "hidden"
+                      )} />
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Footer hint */}
-        <div className="flex items-center justify-between border-t border-border px-4 py-2 text-xs text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <kbd className="border-4 border-border bg-muted px-1.5 py-0.5 font-mono text-[10px]">
-              ↑↓
-            </kbd>
-            <span>Navigate</span>
-            <kbd className="border-4 border-border bg-muted px-1.5 py-0.5 font-mono text-[10px]">
-              ↵
-            </kbd>
-            <span>Select</span>
-            <kbd className="border-4 border-border bg-muted px-1.5 py-0.5 font-mono text-[10px]">
-              Esc
-            </kbd>
-            <span>Close</span>
+        {/* Footer hints */}
+        <div className="flex items-center justify-between border-t border-border bg-muted/20 px-6 py-3 relative z-10 font-mono text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2">
+              <kbd className="border border-border bg-muted px-1.5 py-0.5">↑↓</kbd>
+              <span>NAVIGATE</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <kbd className="border border-border bg-muted px-1.5 py-0.5">↵</kbd>
+              <span>SELECT</span>
+            </div>
+          </div>
+          <div className="hidden sm:flex items-center gap-2">
+            <kbd className="border border-border bg-muted px-1.5 py-0.5">ESC</kbd>
+            <span>TERMINATE</span>
           </div>
         </div>
       </div>

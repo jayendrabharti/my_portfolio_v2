@@ -5,6 +5,7 @@ import ProjectsSection from "@/components/home/ProjectsSection";
 import SkillsSection from "@/components/home/SkillsSection";
 import WorkExperienceSection from "@/components/home/WorkExperienceSection";
 import EducationSection from "@/components/home/EducationSection";
+import ContactSection from "@/components/home/ContactSection";
 import { getPayloadInstance } from "@/payload";
 
 export default async function HomePage() {
@@ -17,6 +18,9 @@ export default async function HomePage() {
   });
   const { totalDocs: educationCount } = await payload.count({
     collection: "education",
+  });
+  const profile = await payload.findGlobal({
+    slug: "profile",
   });
 
   return (
@@ -70,6 +74,15 @@ export default async function HomePage() {
           <BlogsSection />
         </>
       )}
+
+      <div className="section-divider" aria-hidden="true" />
+      <ContactSection
+        email={profile.email}
+        githubUrl={profile.githubUrl}
+        linkedinUrl={profile.linkedinUrl}
+        socials={profile.socials}
+        phoneNumber="+91 8800534849"
+      />
     </>
   );
 }

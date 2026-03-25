@@ -87,19 +87,19 @@ export default async function HeroSection({
             type="bottomUp"
             className="flex flex-col sm:flex-row items-center gap-4 mt-10 flex-wrap"
           >
-            <Link href="/contact-me" className="w-full sm:w-auto">
+            <Link href="#contact" className="w-full sm:w-auto">
               <Button className="w-full sm:w-auto font-mono uppercase tracking-widest rounded-none hover:bg-foreground hover:text-background transition-colors h-12 px-8">
                 <HandshakeIcon className="w-4 h-4 mr-2" />
                 Connect
               </Button>
             </Link>
 
-            <Link href="/projects" className="w-full sm:w-auto">
+            <Link href="#projects" className="w-full sm:w-auto">
               <Button
                 variant="outline"
                 className="w-full sm:w-auto font-mono uppercase tracking-widest rounded-none hover:bg-black/[0.02] dark:hover:bg-white/[0.02] h-12 px-8 transition-colors"
               >
-                Work <span className="ml-2">→</span>
+                My Work <span className="ml-2">→</span>
               </Button>
             </Link>
 

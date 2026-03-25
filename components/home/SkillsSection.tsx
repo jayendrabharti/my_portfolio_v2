@@ -68,7 +68,7 @@ function SkillItem({ skill }: { skill: Skill }) {
       <img
         src={skill.iconUrl}
         alt={skill.name}
-        className="w-8 h-8 md:w-10 md:h-10 transition-all duration-300"
+        className="w-8 h-8 md:w-10 md:h-10 transition-all duration-300 drop-shadow-[0_0_2px_rgba(0,0,0,0.5)] dark:drop-shadow-[0_0_2px_rgba(255,255,255,0.5)]"
       />
       <div
         className={cn(

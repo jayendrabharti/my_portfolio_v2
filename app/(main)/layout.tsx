@@ -85,10 +85,7 @@ export default async function RootLayout({
           ) : (
             <>
               <NavBar profile={profile} settings={settings} />
-              <CommandPalette
-                githubUrl={profile.githubUrl}
-                linkedinUrl={profile.linkedinUrl}
-              />
+              <CommandPalette profile={profile} />
               <main
                 className={cn(
                   "flex w-full flex-col flex-1 items-center overflow-x-clip",
