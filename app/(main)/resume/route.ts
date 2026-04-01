@@ -1,7 +1,7 @@
 import { getPayloadInstance } from "@/payload";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
     const payload = await getPayloadInstance();
     const profile = await payload.findGlobal({
@@ -19,10 +19,14 @@ export async function GET() {
       return new NextResponse("Resume URL not found", { status: 404 });
     }
 
-    const response = await fetch(resumeUrl);
-    
+    const { origin } = new URL(req.url);
+    const absoluteUrl = resumeUrl.startsWith("/")
+      ? `${origin}${resumeUrl}`
+      : resumeUrl;
+    const response = await fetch(absoluteUrl);
+
     if (!response.ok) {
-      throw new Error(`Failed to fetch resume from ${resumeUrl}`);
+      throw new Error(`Failed to fetch resume from ${absoluteUrl}`);
     }
 
     const blob = await response.blob();
